@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<!--
+姓名：杨庆鸿 | 学号：24002120509
+时间：2026-11-09 | 大模型：DeepSeek V4.1 Flash Free
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="云栖校园服务平台项目概览，介绍项目定位、技术架构与目录结构。">
+  <meta name="theme-color" content="#06131c">
+  <title>项目概览 | 云栖校园服务平台</title>
+  <link rel="icon" type="image/svg+xml" href="images/yan_favicon.svg">
+  <link rel="stylesheet" href="css/yan_main.css">
+</head>
+<body class="yan_page yan_page--inner">
+  <a class="yan_skip-link" href="#yan_main">跳到主要内容</a>
+
+  <canvas class="yan_canvas" id="yan_canvas" aria-hidden="true"></canvas>
+  <div class="yan_glow yan_glow--gold" aria-hidden="true"></div>
+  <div class="yan_glow yan_glow--mint" aria-hidden="true"></div>
+
+  <header class="yan_header">
+    <a class="yan_brand" href="index.html" aria-label="云栖校园服务平台首页">
+      <span class="yan_brand-mark">YQ</span>
+      <span class="yan_brand-text">
+        <strong>云栖校园</strong>
+        <small>YUNQI CAMPUS</small>
+      </span>
+    </a>
+
+    <nav class="yan_top-nav" aria-label="主导航">
+      <a class="yan_top-nav-link" href="index.html">首页</a>
+      <a class="yan_top-nav-link yan_top-nav-link--active" href="about.html" aria-current="page">项目概览</a>
+      <a class="yan_top-nav-link" href="/api/health" target="_blank" rel="noopener">接口状态</a>
+    </nav>
+
+    <div class="yan_service-state" data-yan-service aria-live="polite">
+      <span class="yan_service-dot" aria-hidden="true"></span>
+      <span data-yan-service-text>连接中</span>
+    </div>
+  </header>
+
+  <main class="yan_main yan_inner-main" id="yan_main">
+    <a class="yan_back-link" href="index.html">
+      <span aria-hidden="true">←</span>
+      返回首页
+    </a>
+
+    <section class="yan_inner-hero" aria-labelledby="yan_about_title">
+      <p class="yan_eyebrow"><span aria-hidden="true"></span> PROJECT OVERVIEW</p>
+      <h1 class="yan_inner-title" id="yan_about_title">关于云栖校园</h1>
+      <p class="yan_inner-lead">
+        云栖校园服务平台是一个自选的全栈 Web 项目。它以内敛清晰的界面承载校园服务入口，
+        以标准化的 RESTful 接口连接数据与页面，并以可维护的目录结构为后续功能扩展留出空间。
+      </p>
+      <div class="yan_tags">
+        <span class="yan_tag">项目类别 · 自选</span>
+        <span class="yan_tag">全栈实践</span>
+        <span class="yan_tag">持续迭代</span>
+      </div>
+    </section>
+
+    <section class="yan_info-grid" aria-label="项目说明">
+      <article class="yan_info-card">
+        <span class="yan_info-number">01</span>
+        <h2>项目定位</h2>
+        <p>面向校园场景的数字服务入口，强调信息清晰、访问轻量与体验一致。</p>
+      </article>
+      <article class="yan_info-card">
+        <span class="yan_info-number">02</span>
+        <h2>前端原则</h2>
+        <p>仅使用原生 HTML、CSS 与 JavaScript，不引入第三方库、框架或 CDN 资源。</p>
+      </article>
+      <article class="yan_info-card">
+        <span class="yan_info-number">03</span>
+        <h2>后端架构</h2>
+        <p>基于 Node.js 与 Express，采用 RESTful + MVC 分层，所有接口统一使用 /api/ 前缀。</p>
+      </article>
+      <article class="yan_info-card">
+        <span class="yan_info-number">04</span>
+        <h2>数据策略</h2>
+        <p>使用 MySQL 持久化业务数据，数据库凭据隔离在本地环境变量中，不进入代码仓库。</p>
+      </article>
+    </section>
+
+    <section class="yan_stack" aria-labelledby="yan_stack_title">
+      <div class="yan_section-heading">
+        <div>
+          <p class="yan_section-kicker">TECH FOUNDATION</p>
+          <h2 id="yan_stack_title">技术底座</h2>
+        </div>
+        <p>从浏览器到数据库，保持结构简单且职责明确。</p>
+      </div>
+
+      <div class="yan_stack-grid">
+        <div class="yan_stack-item">
+          <span class="yan_stack-index">01</span>
+          <h3>HTML · CSS · JavaScript</h3>
+          <p>语义化页面、响应式布局与 Canvas 背景动画，全部由原生能力实现。</p>
+        </div>
+        <div class="yan_stack-item">
+          <span class="yan_stack-index">02</span>
+          <h3>Node.js · Express</h3>
+          <p>固定 8509 端口，托管前端静态资源，统一处理跨域与 JSON 响应。</p>
+        </div>
+        <div class="yan_stack-item">
+          <span class="yan_stack-index">03</span>
+          <h3>MySQL · RESTful API</h3>
+          <p>以 yan_ 前缀组织数据对象，通过分层接口提供稳定的数据能力。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="yan_structure" aria-labelledby="yan_structure_title">
+      <div class="yan_section-heading">
+        <div>
+          <p class="yan_section-kicker">PROJECT LAYOUT</p>
+          <h2 id="yan_structure_title">目录结构</h2>
+        </div>
+        <p>前后端职责分离，资源与业务代码各归其位。</p>
+      </div>
+
+      <pre class="yan_code-block"><code>web_work/
+├─ frontend/          # 原生前端
+│  ├─ css/            # 样式文件
+│  ├─ js/             # 交互与动画
+│  ├─ fonts/          # iconfont 资源
+│  ├─ images/         # 图片资源
+│  └─ index.html      # 项目首页
+└─ backend/           # Express 服务
+   ├─ config/         # 数据库配置
+   ├─ controllers/    # 控制器
+   ├─ middleware/     # 中间件
+   ├─ models/         # 数据模型
+   ├─ routes/         # 接口路由
+   └─ server.js       # 服务入口</code></pre>
+    </section>
+
+    <div class="yan_inner-actions">
+      <a class="yan_button yan_button--primary" href="index.html">返回项目首页</a>
+      <a class="yan_button yan_button--ghost" href="/api/health" target="_blank" rel="noopener">查看接口状态</a>
+    </div>
+  </main>
+
+  <footer class="yan_footer">
+    <p>© <span id="yan_year">2026</span> 云栖校园服务平台</p>
+    <p>杨庆鸿 · 24002120509</p>
+  </footer>
+
+  <script src="js/yan_main.js" defer></script>
+</body>
+</html>

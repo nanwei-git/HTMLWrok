@@ -1,0 +1,26 @@
+# 姓名：杨庆鸿 | 学号：24002120509
+# 时间：2026-11-09 | 大模型：DeepSeek V4.1 Flash Free
+
+# 依赖目录
+node_modules/
+**/node_modules/
+
+# 环境变量（数据库凭据不得提交）
+.env
+backend/.env
+**/.env
+
+# 含本地敏感信息的原始提示词
+提示词.txt
+
+# 日志
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 编辑器与操作系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

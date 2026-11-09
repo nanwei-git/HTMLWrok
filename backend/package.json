@@ -1,0 +1,26 @@
+{
+  "//": "姓名：杨庆鸿 | 学号：24002120509\n时间：2026-11-09 | 大模型：DeepSeek V4.1 Flash Free",
+  "name": "yan-campus-platform-backend",
+  "version": "1.0.0",
+  "description": "云栖校园服务平台后端 | 姓名：杨庆鸿 | 学号：24002120509 | 时间：2026-11-09 | 大模型：DeepSeek V4.1 Flash Free",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "yan_campus",
+    "express",
+    "restful",
+    "mvc"
+  ],
+  "author": "杨庆鸿 <24002120509>",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0",
+    "mysql2": "^3.24.6"
+  }
+}
