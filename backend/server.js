@@ -6,7 +6,7 @@ const yan_app = require('./app');
 const yan_port = 8509;
 
 const yan_server = yan_app.listen(yan_port, () => {
-  console.log(`云栖校园服务平台已启动：http://localhost:${yan_port}`);
+  console.log(`云栖数据工坊已启动：http://localhost:${yan_port}`);
   console.log(`健康检查接口：http://localhost:${yan_port}/api/health`);
 });
 

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<!--
+姓名：杨庆鸿 | 学号：24002120509
+时间：2026-11-09 | 大模型：DeepSeek V4.1 Flash Free
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="云栖数据工坊报表中心：按业务分类浏览经营、用户、销售、财务与风险分析报表。">
+  <meta name="theme-color" content="#06121a">
+  <title>报表中心 | 云栖数据工坊</title>
+  <link rel="icon" type="image/svg+xml" href="images/yan_favicon.svg">
+  <link rel="stylesheet" href="css/yan_main.css">
+</head>
+<body class="yan_page">
+  <a class="yan_skip-link" href="#yan_main">跳到主要内容</a>
+
+  <canvas class="yan_canvas" id="yan_canvas" aria-hidden="true"></canvas>
+  <div class="yan_glow yan_glow--one" aria-hidden="true"></div>
+  <div class="yan_glow yan_glow--two" aria-hidden="true"></div>
+
+  <header class="yan_header">
+    <a class="yan_brand" href="index.html" aria-label="云栖数据工坊首页">
+      <span class="yan_brand-mark">YQ</span>
+      <span class="yan_brand-text">
+        <strong>云栖数据工坊</strong>
+        <small>YUNQI DATA STUDIO</small>
+      </span>
+    </a>
+
+    <nav class="yan_top-nav" aria-label="主导航">
+      <a class="yan_top-nav-link" href="index.html">工作台</a>
+      <a class="yan_top-nav-link" href="workflows.html">工作流</a>
+      <a class="yan_top-nav-link yan_top-nav-link--active" href="reports.html" aria-current="page">报表中心</a>
+      <a class="yan_top-nav-link" href="data-sources.html">数据源</a>
+      <a class="yan_top-nav-link" href="database.html">数据库</a>
+      <a class="yan_top-nav-link" href="tech-news.html">科技新闻</a>
+      <a class="yan_top-nav-link" href="about.html">项目概览</a>
+    </nav>
+
+    <div class="yan_service-state" data-yan-service aria-live="polite">
+      <span class="yan_service-dot" aria-hidden="true"></span>
+      <span data-yan-service-text>连接中</span>
+    </div>
+  </header>
+
+  <main class="yan_main" id="yan_main">
+    <section class="yan_page-head" aria-labelledby="yan_page_title">
+      <a class="yan_breadcrumb" href="index.html">← 返回工作台</a>
+      <p class="yan_section-kicker">ANALYTICS DELIVERY</p>
+      <h1 class="yan_page-title" id="yan_page_title">报表中心</h1>
+      <p class="yan_page-lead">
+        报表是工作流的最终交付物。这里汇总了经营、增长、销售、运营、财务与风险主题的分析成果，
+        点击任意报表即可查看完整趋势与生成链路。
+      </p>
+
+      <div class="yan_summary-inline" aria-label="报表统计">
+        <span class="yan_summary-item">全部 <strong data-yan-report-count>--</strong></span>
+        <span class="yan_summary-item">已发布 <strong data-yan-report-published>--</strong></span>
+        <span class="yan_summary-item">待审核 <strong data-yan-report-review>--</strong></span>
+        <span class="yan_summary-item">草稿 <strong data-yan-report-draft>--</strong></span>
+      </div>
+    </section>
+
+    <div class="yan_state-box yan_state-box--error" data-yan-error hidden>
+      <span class="yan_state-icon" aria-hidden="true">!</span>
+      <h2 class="yan_state-title">报表列表加载失败</h2>
+      <p class="yan_state-text" data-yan-error-text>请确认后端服务已启动后刷新页面。</p>
+    </div>
+
+    <div class="yan_filters" data-yan-category-filters role="group" aria-label="按报表分类筛选"></div>
+    <div class="yan_filters" data-yan-status-filters role="group" aria-label="按发布状态筛选">
+      <button class="yan_filter yan_filter--active" type="button" data-yan-report-status="all">全部状态</button>
+      <button class="yan_filter" type="button" data-yan-report-status="published">已发布</button>
+      <button class="yan_filter" type="button" data-yan-report-status="review">待审核</button>
+      <button class="yan_filter" type="button" data-yan-report-status="draft">草稿</button>
+    </div>
+
+    <section class="yan_report-grid" data-yan-report-grid aria-label="报表列表" aria-live="polite">
+      <div class="yan_skeleton"></div>
+      <div class="yan_skeleton"></div>
+      <div class="yan_skeleton"></div>
+      <div class="yan_skeleton"></div>
+      <div class="yan_skeleton"></div>
+      <div class="yan_skeleton"></div>
+    </section>
+  </main>
+
+  <footer class="yan_footer">
+    <p>© <span id="yan_year">2026</span> 云栖数据工坊 · 数据分析报表工作流平台</p>
+    <div class="yan_footer-links">
+      <span>杨庆鸿 · 24002120509</span>
+      <a href="workflows.html">工作流</a>
+      <a href="about.html">项目概览</a>
+    </div>
+  </footer>
+
+  <noscript>
+    <p>当前浏览器未启用 JavaScript，报表列表将无法显示。</p>
+  </noscript>
+
+  <script src="js/yan_main.js" defer></script>
+  <script src="js/yan_reports.js" defer></script>
+</body>
+</html>

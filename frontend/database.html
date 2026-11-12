@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<!--
+姓名：杨庆鸿 | 学号：24002120509
+时间：2026-11-09 | 大模型：DeepSeek V4.1 Flash Free
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="云栖数据工坊数据库连接测试：输入 MySQL 用户名和密码，验证数据库连接并查看后端接口返回。">
+  <meta name="theme-color" content="#06121a">
+  <title>数据库连接 | 云栖数据工坊</title>
+  <link rel="icon" type="image/svg+xml" href="images/yan_favicon.svg">
+  <link rel="stylesheet" href="css/yan_main.css">
+</head>
+<body class="yan_page">
+  <a class="yan_skip-link" href="#yan_main">跳到主要内容</a>
+
+  <canvas class="yan_canvas" id="yan_canvas" aria-hidden="true"></canvas>
+  <div class="yan_glow yan_glow--one" aria-hidden="true"></div>
+  <div class="yan_glow yan_glow--two" aria-hidden="true"></div>
+
+  <header class="yan_header">
+    <a class="yan_brand" href="index.html" aria-label="云栖数据工坊首页">
+      <span class="yan_brand-mark">YQ</span>
+      <span class="yan_brand-text">
+        <strong>云栖数据工坊</strong>
+        <small>YUNQI DATA STUDIO</small>
+      </span>
+    </a>
+
+    <nav class="yan_top-nav" aria-label="主导航">
+      <a class="yan_top-nav-link" href="index.html">工作台</a>
+      <a class="yan_top-nav-link" href="workflows.html">工作流</a>
+      <a class="yan_top-nav-link" href="reports.html">报表中心</a>
+      <a class="yan_top-nav-link" href="data-sources.html">数据源</a>
+      <a class="yan_top-nav-link yan_top-nav-link--active" href="database.html" aria-current="page">数据库</a>
+      <a class="yan_top-nav-link" href="tech-news.html">科技新闻</a>
+      <a class="yan_top-nav-link" href="about.html">项目概览</a>
+    </nav>
+
+    <div class="yan_service-state" data-yan-service aria-live="polite">
+      <span class="yan_service-dot" aria-hidden="true"></span>
+      <span data-yan-service-text>连接中</span>
+    </div>
+  </header>
+
+  <main class="yan_main" id="yan_main">
+    <section class="yan_page-head" aria-labelledby="yan_page_title">
+      <a class="yan_breadcrumb" href="index.html">← 返回工作台</a>
+      <p class="yan_section-kicker">DATABASE ACCESS</p>
+      <h1 class="yan_page-title" id="yan_page_title">数据库连接</h1>
+      <p class="yan_page-lead">
+        输入 MySQL 用户名与密码，测试后端能否连接目标数据库。
+        连接目标由服务端环境变量决定，凭据只用于本次请求，不会写入数据库或日志。
+      </p>
+
+      <div class="yan_summary-inline" aria-label="数据库连接说明">
+        <span class="yan_summary-item">数据库 <strong>MySQL</strong></span>
+        <span class="yan_summary-item">接口 <strong>POST /api/database/test</strong></span>
+        <span class="yan_summary-item">响应格式 <strong>{ code, msg, data }</strong></span>
+      </div>
+    </section>
+
+    <div class="yan_database-grid">
+      <article class="yan_panel">
+        <header class="yan_panel-head">
+          <div>
+            <h2 class="yan_panel-title">填写连接凭据</h2>
+            <p class="yan_panel-sub">表单提交后，后端会使用 mysql2 建立一次短连接并执行验证查询</p>
+          </div>
+          <span class="yan_panel-tag">CREDENTIAL TEST</span>
+        </header>
+
+        <form class="yan_form" data-yan-db-form novalidate>
+          <div class="yan_field">
+            <label class="yan_field-label" for="yan_db_username">MySQL 用户名</label>
+            <input
+              class="yan_input"
+              id="yan_db_username"
+              name="username"
+              type="text"
+              value="root"
+              placeholder="请输入 MySQL 用户名"
+              autocomplete="username"
+              maxlength="64"
+              required
+            >
+          </div>
+
+          <div class="yan_field">
+            <label class="yan_field-label" for="yan_db_password">MySQL 密码</label>
+            <input
+              class="yan_input"
+              id="yan_db_password"
+              name="password"
+              type="password"
+              value="123456"
+              placeholder="请输入 MySQL 密码"
+              autocomplete="current-password"
+              maxlength="128"
+              required
+            >
+            <p class="yan_field-hint">演示环境默认账号：root / 123456。连接目标由 backend/.env 中的 DB_HOST 与 DB_NAME 决定。</p>
+          </div>
+
+          <div class="yan_inline-alert yan_inline-alert--info">
+            <span class="yan_inline-alert-icon" aria-hidden="true">i</span>
+            <span>密码仅在本次请求中使用，后端不会保存，也不会写入接口文档或控制台日志。</span>
+          </div>
+
+          <div class="yan_form-actions">
+            <button class="yan_button yan_button--primary" type="submit" data-yan-db-submit>
+              测试数据库连接
+            </button>
+            <button class="yan_button" type="button" data-yan-db-reset>恢复默认账号</button>
+            <button class="yan_button" type="button" data-yan-db-toggle-password>显示密码</button>
+          </div>
+
+          <div class="yan_inline-alert" data-yan-db-alert hidden role="status" aria-live="polite">
+            <span class="yan_inline-alert-icon" data-yan-db-alert-icon aria-hidden="true">·</span>
+            <span data-yan-db-alert-text>等待连接测试</span>
+          </div>
+        </form>
+      </article>
+
+      <aside class="yan_detail-side" aria-label="数据库接口信息">
+        <article class="yan_panel">
+          <div class="yan_info-panel">
+            <h2 class="yan_info-title">后端接口</h2>
+            <div class="yan_api-box">
+              <span class="yan_api-box-label">POST /api/database/test</span>
+              <a class="yan_api-url" data-yan-db-api href="/api/database/test" target="_blank" rel="noopener">/api/database/test</a>
+            </div>
+            <p class="yan_state-text" style="text-align: left; margin-top: 14px;">
+              直接打开链接会通过 GET 返回接口字段说明；表单使用 POST 提交用户名与密码并执行真实连接测试。
+            </p>
+          </div>
+        </article>
+
+        <article class="yan_panel">
+          <div class="yan_info-panel">
+            <h2 class="yan_info-title">请求示例</h2>
+            <pre class="yan_json">POST /api/database/test
+Content-Type: application/json
+
+{
+  "username": "root",
+  "password": "123456"
+}</pre>
+          </div>
+        </article>
+      </aside>
+    </div>
+
+    <section class="yan_result-panel" data-yan-db-result-panel hidden aria-labelledby="yan_db_result_title">
+      <div class="yan_section-head">
+        <div>
+          <p class="yan_section-kicker">CONNECTION RESULT</p>
+          <h2 class="yan_section-title" id="yan_db_result_title">连接结果</h2>
+        </div>
+        <p class="yan_section-note" data-yan-db-result-note>展示后端接口返回的数据内容。</p>
+      </div>
+
+      <article class="yan_panel">
+        <div class="yan_result-grid">
+          <div class="yan_result-item">
+            <span>数据库主机</span>
+            <strong data-yan-db-field="host">--</strong>
+          </div>
+          <div class="yan_result-item">
+            <span>目标数据库</span>
+            <strong data-yan-db-field="database">--</strong>
+          </div>
+          <div class="yan_result-item">
+            <span>连接账号</span>
+            <strong data-yan-db-field="username">--</strong>
+          </div>
+          <div class="yan_result-item">
+            <span>MySQL 版本</span>
+            <strong data-yan-db-field="serverVersion">--</strong>
+          </div>
+          <div class="yan_result-item">
+            <span>服务器时间</span>
+            <strong data-yan-db-field="currentTime">--</strong>
+          </div>
+          <div class="yan_result-item">
+            <span>连接状态</span>
+            <strong data-yan-db-field="status">--</strong>
+          </div>
+        </div>
+
+        <details class="yan_details">
+          <summary>查看接口原始返回数据</summary>
+          <pre class="yan_json" data-yan-db-json>{}</pre>
+        </details>
+      </article>
+    </section>
+  </main>
+
+  <footer class="yan_footer">
+    <p>© <span id="yan_year">2026</span> 云栖数据工坊 · 数据分析报表工作流平台</p>
+    <div class="yan_footer-links">
+      <span>杨庆鸿 · 24002120509</span>
+      <a href="tech-news.html">科技新闻</a>
+      <a href="about.html">项目概览</a>
+    </div>
+  </footer>
+
+  <noscript>
+    <p>当前浏览器未启用 JavaScript，数据库连接测试将无法执行。</p>
+  </noscript>
+
+  <script src="js/yan_main.js" defer></script>
+  <script src="js/yan_database.js" defer></script>
+</body>
+</html>

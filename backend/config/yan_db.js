@@ -15,7 +15,13 @@ const yan_pool = yan_mysql.createPool({
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
-  charset: 'utf8mb4'
+  charset: 'utf8mb4',
+  dateStrings: true
+});
+
+const yan_db_settings = Object.freeze({
+  host: process.env.DB_HOST || '127.0.0.1',
+  database: process.env.DB_NAME || 'yan_report_platform'
 });
 
 async function yan_check_database_connection() {
@@ -31,5 +37,6 @@ async function yan_check_database_connection() {
 
 module.exports = {
   yan_pool,
+  yan_db_settings,
   yan_check_database_connection
 };

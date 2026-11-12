@@ -1,8 +1,8 @@
 {
   "//": "姓名：杨庆鸿 | 学号：24002120509\n时间：2026-11-09 | 大模型：DeepSeek V4.1 Flash Free",
-  "name": "yan-campus-platform-backend",
-  "version": "1.0.0",
-  "description": "云栖校园服务平台后端 | 姓名：杨庆鸿 | 学号：24002120509 | 时间：2026-11-09 | 大模型：DeepSeek V4.1 Flash Free",
+  "name": "yan-data-studio-backend",
+  "version": "2.0.0",
+  "description": "云栖数据工坊后端 | 数据分析报表工作流平台 | 姓名：杨庆鸿 | 学号：24002120509 | 时间：2026-11-09 | 大模型：DeepSeek V4.1 Flash Free",
   "main": "server.js",
   "type": "commonjs",
   "scripts": {
@@ -10,7 +10,9 @@
     "dev": "node --watch server.js"
   },
   "keywords": [
-    "yan_campus",
+    "yan_data_studio",
+    "data_workflow",
+    "analytics",
     "express",
     "restful",
     "mvc"

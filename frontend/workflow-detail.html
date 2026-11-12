@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<!--
+姓名：杨庆鸿 | 学号：24002120509
+时间：2026-11-09 | 大模型：DeepSeek V4.1 Flash Free
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="云栖数据工坊工作流详情：查看步骤编排、执行记录与运行成功率。">
+  <meta name="theme-color" content="#06121a">
+  <title>工作流详情 | 云栖数据工坊</title>
+  <link rel="icon" type="image/svg+xml" href="images/yan_favicon.svg">
+  <link rel="stylesheet" href="css/yan_main.css">
+</head>
+<body class="yan_page">
+  <a class="yan_skip-link" href="#yan_main">跳到主要内容</a>
+
+  <canvas class="yan_canvas" id="yan_canvas" aria-hidden="true"></canvas>
+  <div class="yan_glow yan_glow--one" aria-hidden="true"></div>
+  <div class="yan_glow yan_glow--two" aria-hidden="true"></div>
+
+  <header class="yan_header">
+    <a class="yan_brand" href="index.html" aria-label="云栖数据工坊首页">
+      <span class="yan_brand-mark">YQ</span>
+      <span class="yan_brand-text">
+        <strong>云栖数据工坊</strong>
+        <small>YUNQI DATA STUDIO</small>
+      </span>
+    </a>
+
+    <nav class="yan_top-nav" aria-label="主导航">
+      <a class="yan_top-nav-link" href="index.html">工作台</a>
+      <a class="yan_top-nav-link yan_top-nav-link--active" href="workflows.html" aria-current="page">工作流</a>
+      <a class="yan_top-nav-link" href="reports.html">报表中心</a>
+      <a class="yan_top-nav-link" href="data-sources.html">数据源</a>
+      <a class="yan_top-nav-link" href="database.html">数据库</a>
+      <a class="yan_top-nav-link" href="tech-news.html">科技新闻</a>
+      <a class="yan_top-nav-link" href="about.html">项目概览</a>
+    </nav>
+
+    <div class="yan_service-state" data-yan-service aria-live="polite">
+      <span class="yan_service-dot" aria-hidden="true"></span>
+      <span data-yan-service-text>连接中</span>
+    </div>
+  </header>
+
+  <main class="yan_main" id="yan_main">
+    <div class="yan_state-box yan_state-box--error" data-yan-error hidden>
+      <span class="yan_state-icon" aria-hidden="true">!</span>
+      <h2 class="yan_state-title">工作流详情加载失败</h2>
+      <p class="yan_state-text" data-yan-error-text>请确认后端服务已启动，并检查地址中的工作流编号。</p>
+    </div>
+
+    <div data-yan-detail-content>
+      <section class="yan_detail-head" aria-labelledby="yan_detail_title">
+        <a class="yan_breadcrumb" href="workflows.html">← 返回工作流中心</a>
+        <div class="yan_detail-topline">
+          <span class="yan_status yan_status--draft" data-yan-workflow-status>加载中</span>
+          <span class="yan_workflow-id" data-yan-workflow-code>FLOW / ---</span>
+        </div>
+        <h1 class="yan_detail-title" id="yan_detail_title" data-yan-workflow-name>正在载入工作流…</h1>
+        <p class="yan_detail-lead" data-yan-workflow-description>正在从后端读取步骤编排与运行记录。</p>
+
+        <div class="yan_detail-actions">
+          <button class="yan_button yan_button--primary" type="button" data-yan-run-button disabled>
+            手动运行工作流
+          </button>
+          <a class="yan_button" href="reports.html">浏览相关报表</a>
+          <span class="yan_panel-tag" data-yan-run-hint>正在检查运行状态</span>
+        </div>
+
+        <div class="yan_detail-stats" aria-label="工作流关键指标">
+          <div class="yan_detail-stat">
+            <span>执行成功率</span>
+            <strong data-yan-workflow-success>--</strong>
+          </div>
+          <div class="yan_detail-stat">
+            <span>步骤数量</span>
+            <strong data-yan-workflow-steps>--</strong>
+          </div>
+          <div class="yan_detail-stat">
+            <span>最近运行</span>
+            <strong data-yan-workflow-last-run>--</strong>
+          </div>
+          <div class="yan_detail-stat">
+            <span>近期运行数</span>
+            <strong data-yan-workflow-runs>--</strong>
+          </div>
+        </div>
+      </section>
+
+      <div class="yan_detail-grid">
+        <div class="yan_detail-main">
+          <article class="yan_panel">
+            <header class="yan_panel-head">
+              <div>
+                <h2 class="yan_panel-title">步骤编排</h2>
+                <p class="yan_panel-sub">从数据抽取到结果交付的完整执行链路</p>
+              </div>
+              <span class="yan_panel-tag">PIPELINE</span>
+            </header>
+            <div class="yan_step-list" data-yan-steps aria-live="polite">
+              <div class="yan_skeleton" style="margin: 18px;"></div>
+            </div>
+          </article>
+
+          <article class="yan_panel" style="margin-top: 14px;">
+            <header class="yan_panel-head">
+              <div>
+                <h2 class="yan_panel-title">最近执行记录</h2>
+                <p class="yan_panel-sub">展示最近 8 次运行的耗时、处理量与触发方式</p>
+              </div>
+              <span class="yan_panel-tag">RUN HISTORY</span>
+            </header>
+            <div class="yan_run-history" data-yan-runs aria-live="polite">
+              <div class="yan_skeleton" style="margin: 18px;"></div>
+            </div>
+          </article>
+        </div>
+
+        <aside class="yan_detail-side" aria-label="工作流配置信息">
+          <article class="yan_panel">
+            <div class="yan_info-panel">
+              <h2 class="yan_info-title">配置信息</h2>
+              <div class="yan_info-row"><span>调度计划</span><span data-yan-info="schedule">--</span></div>
+              <div class="yan_info-row"><span>负责人</span><span data-yan-info="owner">--</span></div>
+              <div class="yan_info-row"><span>创建时间</span><span data-yan-info="created">--</span></div>
+              <div class="yan_info-row"><span>最近更新</span><span data-yan-info="updated">--</span></div>
+              <div class="yan_info-row"><span>工作流编号</span><span data-yan-info="id">--</span></div>
+            </div>
+          </article>
+
+          <article class="yan_panel">
+            <div class="yan_info-panel">
+              <h2 class="yan_info-title">运行说明</h2>
+              <p class="yan_state-text" style="text-align: left;">
+                只有处于「运行中」状态的工作流可以手动触发。执行成功后，系统会写入一条运行记录，
+                并重新计算该工作流的成功率与最近运行时间。
+              </p>
+            </div>
+          </article>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="yan_footer">
+    <p>© <span id="yan_year">2026</span> 云栖数据工坊 · 数据分析报表工作流平台</p>
+    <div class="yan_footer-links">
+      <span>杨庆鸿 · 24002120509</span>
+      <a href="workflows.html">工作流中心</a>
+      <a href="about.html">项目概览</a>
+    </div>
+  </footer>
+
+  <noscript>
+    <p>当前浏览器未启用 JavaScript，工作流详情将无法显示。</p>
+  </noscript>
+
+  <script src="js/yan_main.js" defer></script>
+  <script src="js/yan_workflow_detail.js" defer></script>
+</body>
+</html>

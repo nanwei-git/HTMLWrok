@@ -2,12 +2,13 @@
 // 时间：2026-11-09 | 大模型：DeepSeek V4.1 Flash Free
 
 const yan_project_info = Object.freeze({
-  name: '云栖校园服务平台',
-  englishName: 'Yunqi Campus Platform',
+  name: '云栖数据工坊',
+  tagline: '数据分析报表工作流平台',
+  englishName: 'Yunqi Data Studio',
   category: '自选',
   studentName: '杨庆鸿',
   studentId: '24002120509',
-  version: '1.0.0'
+  version: '2.0.0'
 });
 
 function yan_get_project_info() {

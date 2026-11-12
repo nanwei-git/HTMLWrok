@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!--
+姓名：杨庆鸿 | 学号：24002120509
+时间：2026-11-09 | 大模型：DeepSeek V4.1 Flash Free
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="云栖数据工坊科技新闻列表：从 MySQL 读取科技新闻，展示后端接口链接、分类筛选与新闻数据。">
+  <meta name="theme-color" content="#06121a">
+  <title>科技新闻 | 云栖数据工坊</title>
+  <link rel="icon" type="image/svg+xml" href="images/yan_favicon.svg">
+  <link rel="stylesheet" href="css/yan_main.css">
+</head>
+<body class="yan_page">
+  <a class="yan_skip-link" href="#yan_main">跳到主要内容</a>
+
+  <canvas class="yan_canvas" id="yan_canvas" aria-hidden="true"></canvas>
+  <div class="yan_glow yan_glow--one" aria-hidden="true"></div>
+  <div class="yan_glow yan_glow--two" aria-hidden="true"></div>
+
+  <header class="yan_header">
+    <a class="yan_brand" href="index.html" aria-label="云栖数据工坊首页">
+      <span class="yan_brand-mark">YQ</span>
+      <span class="yan_brand-text">
+        <strong>云栖数据工坊</strong>
+        <small>YUNQI DATA STUDIO</small>
+      </span>
+    </a>
+
+    <nav class="yan_top-nav" aria-label="主导航">
+      <a class="yan_top-nav-link" href="index.html">工作台</a>
+      <a class="yan_top-nav-link" href="workflows.html">工作流</a>
+      <a class="yan_top-nav-link" href="reports.html">报表中心</a>
+      <a class="yan_top-nav-link" href="data-sources.html">数据源</a>
+      <a class="yan_top-nav-link" href="database.html">数据库</a>
+      <a class="yan_top-nav-link yan_top-nav-link--active" href="tech-news.html" aria-current="page">科技新闻</a>
+      <a class="yan_top-nav-link" href="about.html">项目概览</a>
+    </nav>
+
+    <div class="yan_service-state" data-yan-service aria-live="polite">
+      <span class="yan_service-dot" aria-hidden="true"></span>
+      <span data-yan-service-text>连接中</span>
+    </div>
+  </header>
+
+  <main class="yan_main" id="yan_main">
+    <section class="yan_page-head" aria-labelledby="yan_page_title">
+      <a class="yan_breadcrumb" href="index.html">← 返回工作台</a>
+      <p class="yan_section-kicker">TECH NEWS FEED</p>
+      <h1 class="yan_page-title" id="yan_page_title">科技新闻</h1>
+      <p class="yan_page-lead">
+        新闻数据保存在 MySQL 的 <code>yan_tech_news</code> 表中，由后端接口统一读取。
+        页面展示接口地址、分类筛选与完整新闻内容，可直接打开接口查看原始 JSON。
+      </p>
+
+      <div class="yan_summary-inline" aria-label="科技新闻统计">
+        <span class="yan_summary-item">新闻总数 <strong data-yan-news-total>--</strong></span>
+        <span class="yan_summary-item">分类数量 <strong data-yan-news-category-count>--</strong></span>
+        <span class="yan_summary-item">来源数量 <strong data-yan-news-source-count>--</strong></span>
+        <span class="yan_summary-item">最新发布 <strong data-yan-news-latest>--</strong></span>
+      </div>
+    </section>
+
+    <div class="yan_api-bar">
+      <div class="yan_api-bar-main">
+        <span class="yan_api-bar-method">GET</span>
+        <a class="yan_api-url" data-yan-news-api href="/api/tech-news" target="_blank" rel="noopener">/api/tech-news</a>
+      </div>
+      <span class="yan_api-bar-note">接口返回 data.news 与 data.summary</span>
+    </div>
+
+    <div class="yan_state-box yan_state-box--error" data-yan-error hidden>
+      <span class="yan_state-icon" aria-hidden="true">!</span>
+      <h2 class="yan_state-title">科技新闻加载失败</h2>
+      <p class="yan_state-text" data-yan-error-text>请确认后端服务已启动，并检查浏览器控制台。</p>
+    </div>
+
+    <div class="yan_filters" data-yan-news-filters role="group" aria-label="按新闻分类筛选">
+      <button class="yan_filter yan_filter--active" type="button" data-yan-news-category="all">全部分类</button>
+    </div>
+
+    <section class="yan_news-list" data-yan-news-list aria-label="科技新闻列表" aria-live="polite">
+      <div class="yan_skeleton" style="margin: 18px 0;"></div>
+      <div class="yan_skeleton" style="margin: 0 0 18px;"></div>
+      <div class="yan_skeleton"></div>
+    </section>
+
+    <details class="yan_details" style="margin: 24px 0 36px;">
+      <summary>查看接口原始返回数据</summary>
+      <pre class="yan_json" data-yan-news-json>{}</pre>
+    </details>
+  </main>
+
+  <footer class="yan_footer">
+    <p>© <span id="yan_year">2026</span> 云栖数据工坊 · 数据分析报表工作流平台</p>
+    <div class="yan_footer-links">
+      <span>杨庆鸿 · 24002120509</span>
+      <a href="database.html">数据库连接</a>
+      <a href="about.html">项目概览</a>
+    </div>
+  </footer>
+
+  <noscript>
+    <p>当前浏览器未启用 JavaScript，科技新闻列表将无法显示。</p>
+  </noscript>
+
+  <script src="js/yan_main.js" defer></script>
+  <script src="js/yan_news.js" defer></script>
+</body>
+</html>

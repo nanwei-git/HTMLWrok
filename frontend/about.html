@@ -7,32 +7,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="云栖校园服务平台项目概览，介绍项目定位、技术架构与目录结构。">
-  <meta name="theme-color" content="#06131c">
-  <title>项目概览 | 云栖校园服务平台</title>
+  <meta name="description" content="云栖数据工坊项目概览：了解数据分析报表工作流平台的定位、架构、数据模型与开发规范。">
+  <meta name="theme-color" content="#06121a">
+  <title>项目概览 | 云栖数据工坊</title>
   <link rel="icon" type="image/svg+xml" href="images/yan_favicon.svg">
   <link rel="stylesheet" href="css/yan_main.css">
 </head>
-<body class="yan_page yan_page--inner">
+<body class="yan_page">
   <a class="yan_skip-link" href="#yan_main">跳到主要内容</a>
 
   <canvas class="yan_canvas" id="yan_canvas" aria-hidden="true"></canvas>
-  <div class="yan_glow yan_glow--gold" aria-hidden="true"></div>
-  <div class="yan_glow yan_glow--mint" aria-hidden="true"></div>
+  <div class="yan_glow yan_glow--one" aria-hidden="true"></div>
+  <div class="yan_glow yan_glow--two" aria-hidden="true"></div>
 
   <header class="yan_header">
-    <a class="yan_brand" href="index.html" aria-label="云栖校园服务平台首页">
+    <a class="yan_brand" href="index.html" aria-label="云栖数据工坊首页">
       <span class="yan_brand-mark">YQ</span>
       <span class="yan_brand-text">
-        <strong>云栖校园</strong>
-        <small>YUNQI CAMPUS</small>
+        <strong>云栖数据工坊</strong>
+        <small>YUNQI DATA STUDIO</small>
       </span>
     </a>
 
     <nav class="yan_top-nav" aria-label="主导航">
-      <a class="yan_top-nav-link" href="index.html">首页</a>
+      <a class="yan_top-nav-link" href="index.html">工作台</a>
+      <a class="yan_top-nav-link" href="workflows.html">工作流</a>
+      <a class="yan_top-nav-link" href="reports.html">报表中心</a>
+      <a class="yan_top-nav-link" href="data-sources.html">数据源</a>
+      <a class="yan_top-nav-link" href="database.html">数据库</a>
+      <a class="yan_top-nav-link" href="tech-news.html">科技新闻</a>
       <a class="yan_top-nav-link yan_top-nav-link--active" href="about.html" aria-current="page">项目概览</a>
-      <a class="yan_top-nav-link" href="/api/health" target="_blank" rel="noopener">接口状态</a>
     </nav>
 
     <div class="yan_service-state" data-yan-service aria-live="polite">
@@ -41,112 +45,250 @@
     </div>
   </header>
 
-  <main class="yan_main yan_inner-main" id="yan_main">
-    <a class="yan_back-link" href="index.html">
-      <span aria-hidden="true">←</span>
-      返回首页
-    </a>
-
-    <section class="yan_inner-hero" aria-labelledby="yan_about_title">
-      <p class="yan_eyebrow"><span aria-hidden="true"></span> PROJECT OVERVIEW</p>
-      <h1 class="yan_inner-title" id="yan_about_title">关于云栖校园</h1>
-      <p class="yan_inner-lead">
-        云栖校园服务平台是一个自选的全栈 Web 项目。它以内敛清晰的界面承载校园服务入口，
-        以标准化的 RESTful 接口连接数据与页面，并以可维护的目录结构为后续功能扩展留出空间。
+  <main class="yan_main" id="yan_main">
+    <section class="yan_about-hero" aria-labelledby="yan_about_title">
+      <a class="yan_breadcrumb" href="index.html">← 返回工作台</a>
+      <p class="yan_eyebrow"><span aria-hidden="true"></span> PROJECT OVERVIEW · SELF-INITIATED</p>
+      <h1 class="yan_page-title" id="yan_about_title">让数据沿工作流<br>抵达答案</h1>
+      <p class="yan_page-lead">
+        云栖数据工坊是一个面向数据分析与报表交付场景的工作流平台。
+        它把数据接入、处理步骤、分析报表与运行记录放在同一条链路上，
+        让一次分析从「临时操作」变成「可复用、可追踪的流程」。
       </p>
-      <div class="yan_tags">
-        <span class="yan_tag">项目类别 · 自选</span>
-        <span class="yan_tag">全栈实践</span>
-        <span class="yan_tag">持续迭代</span>
+
+      <div class="yan_identity-strip" aria-label="项目与学生信息">
+        <div class="yan_identity-item">
+          <small>姓名 *</small>
+          <strong class="yan_identity-name">杨庆鸿</strong>
+        </div>
+        <div class="yan_identity-item">
+          <small>学号 *</small>
+          <strong>24002120509</strong>
+        </div>
+        <div class="yan_identity-item">
+          <small>项目名称</small>
+          <strong>云栖数据工坊</strong>
+        </div>
+        <div class="yan_identity-item">
+          <small>项目类别 *</small>
+          <strong>自选</strong>
+        </div>
       </div>
     </section>
 
-    <section class="yan_info-grid" aria-label="项目说明">
-      <article class="yan_info-card">
-        <span class="yan_info-number">01</span>
-        <h2>项目定位</h2>
-        <p>面向校园场景的数字服务入口，强调信息清晰、访问轻量与体验一致。</p>
-      </article>
-      <article class="yan_info-card">
-        <span class="yan_info-number">02</span>
-        <h2>前端原则</h2>
-        <p>仅使用原生 HTML、CSS 与 JavaScript，不引入第三方库、框架或 CDN 资源。</p>
-      </article>
-      <article class="yan_info-card">
-        <span class="yan_info-number">03</span>
-        <h2>后端架构</h2>
-        <p>基于 Node.js 与 Express，采用 RESTful + MVC 分层，所有接口统一使用 /api/ 前缀。</p>
-      </article>
-      <article class="yan_info-card">
-        <span class="yan_info-number">04</span>
-        <h2>数据策略</h2>
-        <p>使用 MySQL 持久化业务数据，数据库凭据隔离在本地环境变量中，不进入代码仓库。</p>
-      </article>
-    </section>
-
-    <section class="yan_stack" aria-labelledby="yan_stack_title">
-      <div class="yan_section-heading">
+    <section class="yan_section" aria-labelledby="yan_position_title">
+      <div class="yan_section-head">
         <div>
-          <p class="yan_section-kicker">TECH FOUNDATION</p>
-          <h2 id="yan_stack_title">技术底座</h2>
+          <p class="yan_section-kicker">POSITIONING</p>
+          <h2 class="yan_section-title" id="yan_position_title">项目定位</h2>
         </div>
-        <p>从浏览器到数据库，保持结构简单且职责明确。</p>
+        <p class="yan_section-note">不是静态报表页面，而是一套围绕分析任务组织的数据产品。</p>
       </div>
 
-      <div class="yan_stack-grid">
-        <div class="yan_stack-item">
-          <span class="yan_stack-index">01</span>
-          <h3>HTML · CSS · JavaScript</h3>
-          <p>语义化页面、响应式布局与 Canvas 背景动画，全部由原生能力实现。</p>
-        </div>
-        <div class="yan_stack-item">
-          <span class="yan_stack-index">02</span>
-          <h3>Node.js · Express</h3>
-          <p>固定 8509 端口，托管前端静态资源，统一处理跨域与 JSON 响应。</p>
-        </div>
-        <div class="yan_stack-item">
-          <span class="yan_stack-index">03</span>
-          <h3>MySQL · RESTful API</h3>
-          <p>以 yan_ 前缀组织数据对象，通过分层接口提供稳定的数据能力。</p>
-        </div>
+      <div class="yan_about-grid">
+        <article class="yan_about-card">
+          <span class="yan_about-index">01 / WHY</span>
+          <h2>从重复分析到流程复用</h2>
+          <p>
+            日常分析往往散落在 SQL、表格与聊天记录中，口径难以统一，结果难以追踪。
+            平台以工作流为核心对象，把抽取、清洗、转换、分析、可视化与交付编排为明确步骤，
+            每次运行都会留下耗时、处理量与成功状态。
+          </p>
+        </article>
+
+        <article class="yan_about-card">
+          <span class="yan_about-index">02 / WHAT</span>
+          <h2>数据、流程、报表的一体化视图</h2>
+          <p>
+            工作台聚合关键指标与最近动态；工作流中心呈现调度与执行情况；
+            报表中心承载最终分析成果；数据源页面统一展示接入状态。
+            四个模块由同一套 MySQL 数据模型与 RESTful API 支撑。
+          </p>
+        </article>
       </div>
     </section>
 
-    <section class="yan_structure" aria-labelledby="yan_structure_title">
-      <div class="yan_section-heading">
+    <section class="yan_section" aria-labelledby="yan_flow_title">
+      <div class="yan_section-head">
         <div>
-          <p class="yan_section-kicker">PROJECT LAYOUT</p>
-          <h2 id="yan_structure_title">目录结构</h2>
+          <p class="yan_section-kicker">ANALYSIS PIPELINE</p>
+          <h2 class="yan_section-title" id="yan_flow_title">一条分析链路的五个阶段</h2>
         </div>
-        <p>前后端职责分离，资源与业务代码各归其位。</p>
+        <p class="yan_section-note">工作流详情页中的步骤，正是按照这条链路组织与展示。</p>
+      </div>
+
+      <div class="yan_flow">
+        <article class="yan_flow-step">
+          <span class="yan_flow-index">STEP 01</span>
+          <h3>接入</h3>
+          <p>连接交易库、行为接口、CRM 与文件数据，明确数据来源与同步状态。</p>
+        </article>
+        <article class="yan_flow-step">
+          <span class="yan_flow-index">STEP 02</span>
+          <h3>清洗</h3>
+          <p>剔除异常与重复记录，统一字段、时间与渠道口径。</p>
+        </article>
+        <article class="yan_flow-step">
+          <span class="yan_flow-index">STEP 03</span>
+          <h3>分析</h3>
+          <p>聚合指标、计算转化与分层，识别趋势和异常。</p>
+        </article>
+        <article class="yan_flow-step">
+          <span class="yan_flow-index">STEP 04</span>
+          <h3>呈现</h3>
+          <p>生成趋势图与摘要，将分析结论组织为可阅读的报表。</p>
+        </article>
+        <article class="yan_flow-step">
+          <span class="yan_flow-index">STEP 05</span>
+          <h3>交付</h3>
+          <p>按计划推送或人工发布，并记录每次运行的完整结果。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="yan_section" aria-labelledby="yan_architecture_title">
+      <div class="yan_section-head">
+        <div>
+          <p class="yan_section-kicker">ARCHITECTURE</p>
+          <h2 class="yan_section-title" id="yan_architecture_title">系统架构</h2>
+        </div>
+        <p class="yan_section-note">原生前端 + Express MVC + MySQL，保持技术栈简单、结构清晰。</p>
+      </div>
+
+      <div class="yan_about-grid">
+        <article class="yan_about-card">
+          <span class="yan_about-index">FRONTEND</span>
+          <h2>原生页面与可视化</h2>
+          <p>
+            HTML、CSS 与 JavaScript 全部原生实现，不引用第三方库或 CDN。
+            页面共享同一套设计变量与组件样式；Canvas 提供低干扰的背景动画，
+            SVG 用于报表趋势图，所有业务数据来自 `/api/` 接口。
+          </p>
+        </article>
+
+        <article class="yan_about-card">
+          <span class="yan_about-index">BACKEND</span>
+          <h2>RESTful MVC 服务</h2>
+          <p>
+            Node.js + Express 按路由、控制器、模型分层。所有接口以 `/api/` 为前缀，
+            使用统一响应格式 <code>{ code, msg, data }</code>。跨域访问全部开放，
+            静态资源由 Express 直接托管，服务固定运行在 8509 端口。
+          </p>
+        </article>
+
+        <article class="yan_about-card">
+          <span class="yan_about-index">DATABASE</span>
+          <h2>五张核心业务表</h2>
+          <p>
+            `yan_data_sources` 保存数据源，`yan_workflows` 保存工作流，
+            `yan_workflow_steps` 保存步骤，`yan_reports` 保存报表与趋势数据，
+            `yan_workflow_runs` 保存运行记录。表名与字段统一使用 `yan_` 前缀。
+          </p>
+        </article>
+
+        <article class="yan_about-card">
+          <span class="yan_about-index">DELIVERY</span>
+          <h2>可追踪的交付结果</h2>
+          <p>
+            手动运行接口会写入新的运行记录，并重新计算成功率与最近运行时间。
+            报表详情页展示趋势数据、摘要、生成工作流与发布状态，
+            让分析结论能够回溯到具体流程与数据来源。
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="yan_section" aria-labelledby="yan_structure_title">
+      <div class="yan_section-head">
+        <div>
+          <p class="yan_section-kicker">PROJECT STRUCTURE</p>
+          <h2 class="yan_section-title" id="yan_structure_title">目录结构</h2>
+        </div>
+        <p class="yan_section-note">前端与后端边界清晰，数据库脚本与接口文档随代码维护。</p>
       </div>
 
       <pre class="yan_code-block"><code>web_work/
-├─ frontend/          # 原生前端
-│  ├─ css/            # 样式文件
-│  ├─ js/             # 交互与动画
-│  ├─ fonts/          # iconfont 资源
-│  ├─ images/         # 图片资源
-│  └─ index.html      # 项目首页
-└─ backend/           # Express 服务
-   ├─ config/         # 数据库配置
-   ├─ controllers/    # 控制器
-   ├─ middleware/     # 中间件
-   ├─ models/         # 数据模型
-   ├─ routes/         # 接口路由
-   └─ server.js       # 服务入口</code></pre>
+├─ frontend/
+│  ├─ css/yan_main.css
+│  ├─ js/yan_main.js
+│  ├─ js/yan_dashboard.js
+│  ├─ js/yan_workflows.js
+│  ├─ js/yan_reports.js
+│  ├─ js/yan_sources.js
+│  ├─ fonts/
+│  └─ images/
+├─ backend/
+│  ├─ config/yan_db.js
+│  ├─ controllers/
+│  ├─ models/
+│  ├─ routes/yan_api.js
+│  ├─ yan_database.md
+│  └─ yan_interface.md
+└─ README.md</code></pre>
     </section>
 
-    <div class="yan_inner-actions">
-      <a class="yan_button yan_button--primary" href="index.html">返回项目首页</a>
-      <a class="yan_button yan_button--ghost" href="/api/health" target="_blank" rel="noopener">查看接口状态</a>
-    </div>
+    <section class="yan_section" aria-labelledby="yan_entry_title">
+      <div class="yan_section-head">
+        <div>
+          <p class="yan_section-kicker">EXPLORE</p>
+          <h2 class="yan_section-title" id="yan_entry_title">继续浏览</h2>
+        </div>
+        <p class="yan_section-note">从任意模块进入，沿同一条数据链路查看平台能力。</p>
+      </div>
+
+      <div class="yan_quick-grid">
+        <a class="yan_quick-card" href="workflows.html">
+          <div class="yan_quick-top">
+            <span class="yan_quick-index">01 / WORKFLOWS</span>
+            <span class="yan_quick-icon" aria-hidden="true">⇄</span>
+          </div>
+          <h3>工作流中心</h3>
+          <p>查看执行成功率、步骤与最近运行记录。</p>
+          <span class="yan_quick-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="yan_quick-card" href="reports.html">
+          <div class="yan_quick-top">
+            <span class="yan_quick-index">02 / REPORTS</span>
+            <span class="yan_quick-icon" aria-hidden="true">▤</span>
+          </div>
+          <h3>报表中心</h3>
+          <p>按业务主题浏览分析成果与趋势。</p>
+          <span class="yan_quick-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="yan_quick-card" href="data-sources.html">
+          <div class="yan_quick-top">
+            <span class="yan_quick-index">03 / SOURCES</span>
+            <span class="yan_quick-icon" aria-hidden="true">◫</span>
+          </div>
+          <h3>数据源</h3>
+          <p>查看连接状态、记录规模与同步时间。</p>
+          <span class="yan_quick-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="yan_quick-card" href="index.html">
+          <div class="yan_quick-top">
+            <span class="yan_quick-index">04 / HOME</span>
+            <span class="yan_quick-icon" aria-hidden="true">⌂</span>
+          </div>
+          <h3>返回工作台</h3>
+          <p>回到实时运营概览与页面导航。</p>
+          <span class="yan_quick-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
   </main>
 
   <footer class="yan_footer">
-    <p>© <span id="yan_year">2026</span> 云栖校园服务平台</p>
-    <p>杨庆鸿 · 24002120509</p>
+    <p>© <span id="yan_year">2026</span> 云栖数据工坊 · 数据分析报表工作流平台</p>
+    <div class="yan_footer-links">
+      <span>杨庆鸿 · 24002120509</span>
+      <a href="index.html">工作台</a>
+      <a href="reports.html">报表中心</a>
+    </div>
   </footer>
+
+  <noscript>
+    <p>当前浏览器未启用 JavaScript，背景动画与服务状态将无法显示。</p>
+  </noscript>
 
   <script src="js/yan_main.js" defer></script>
 </body>
