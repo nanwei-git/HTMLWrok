@@ -608,3 +608,284 @@ GET http://localhost:8509/api/tech-news?category=人工智能
 
 - 数据来源：MySQL 表 `yan_tech_news`。
 - 修改时间：2026-11-09 16:48:00
+
+### 文件列表
+
+- 接口路径：`/api/uploads`
+- HTTP 方法：`GET`
+- 请求参数：
+
+| 参数 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| `category` | string | 否 | 按分类筛选，可选值：`数据集`、`报表`、`日志`、`文档`、`图片`、`其他` |
+
+- 请求示例：
+
+```http
+GET http://localhost:8509/api/uploads
+GET http://localhost:8509/api/uploads?category=数据集
+```
+
+- 响应格式：
+
+```json
+{
+  "code": 0,
+  "msg": "文件列表获取成功",
+  "data": {
+    "uploads": [
+      {
+        "id": 1,
+        "originalName": "yan_sales_channels_2026_11.csv",
+        "extension": "csv",
+        "mimeType": "text/csv",
+        "sizeBytes": 543,
+        "category": "数据集",
+        "description": "11 月各渠道订单、成交额与退款率样例数据",
+        "uploader": "杨庆鸿",
+        "isSeed": true,
+        "uploadedAt": "2026-11-12 08:05:00",
+        "downloadUrl": "/uploads/seed/yan_sales_channels_2026_11.csv"
+      }
+    ],
+    "summary": {
+      "total": 8,
+      "totalSizeBytes": 5777,
+      "seedCount": 8,
+      "categoryCount": 4,
+      "latestUploadedAt": "2026-11-12 08:05:00",
+      "categories": [
+        { "category": "数据集", "count": 3 },
+        { "category": "报表", "count": 2 },
+        { "category": "文档", "count": 2 },
+        { "category": "日志", "count": 1 }
+      ]
+    }
+  }
+}
+```
+
+- 修改时间：2026-11-12 15:50:00
+
+### 文件上传
+
+- 接口路径：`/api/uploads`
+- HTTP 方法：`POST`
+- 请求格式：`multipart/form-data`
+- 请求参数：
+
+| 参数 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| `file` | file | 是 | 单个文件，最大 10 MB |
+| `category` | string | 否 | 文件分类；不传时根据扩展名自动识别 |
+| `description` | string | 否 | 文件说明，最长 200 个字符 |
+
+- 支持扩展名：`CSV`、`JSON`、`TXT`、`LOG`、`MD`、`XLS`、`XLSX`、`PDF`、`PNG`、`JPG`、`JPEG`。
+- 请求示例：
+
+```http
+POST http://localhost:8509/api/uploads
+Content-Type: multipart/form-data; boundary=----YanBoundary
+
+------YanBoundary
+Content-Disposition: form-data; name="file"; filename="sales.csv"
+Content-Type: text/csv
+
+yan_date,yan_gmv
+2026-11-12,128400
+------YanBoundary
+Content-Disposition: form-data; name="category"
+
+数据集
+------YanBoundary
+Content-Disposition: form-data; name="description"
+
+11 月销售明细
+------YanBoundary--
+```
+
+- 成功响应（HTTP 201）：
+
+```json
+{
+  "code": 0,
+  "msg": "文件上传成功",
+  "data": {
+    "upload": {
+      "id": 9,
+      "originalName": "sales.csv",
+      "extension": "csv",
+      "mimeType": "text/csv",
+      "sizeBytes": 42,
+      "category": "数据集",
+      "description": "11 月销售明细",
+      "uploader": "杨庆鸿",
+      "isSeed": false,
+      "uploadedAt": "2026-11-12 15:50:00",
+      "downloadUrl": "/uploads/runtime/yan_20261112155000_0123456789abcdef.csv"
+    }
+  }
+}
+```
+
+- 失败响应：
+
+```json
+{
+  "code": 413,
+  "msg": "文件大小不能超过 10 MB",
+  "data": {
+    "reason": "LIMIT_FILE_SIZE"
+  }
+}
+```
+
+- 其他错误：未选择文件、文件类型不支持、分类非法、文件名为空等返回 400，超过大小限制返回 413。
+- 文件存储路径：`backend/uploads/runtime/`；元数据写入表 `yan_uploads`。
+- 修改时间：2026-11-12 15:50:00
+
+### 删除文件
+
+- 接口路径：`/api/uploads/:id`
+- HTTP 方法：`DELETE`
+- 请求参数：
+
+| 参数 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| `id` | number | 是 | 文件编号，路径参数 |
+
+- 请求示例：
+
+```http
+DELETE http://localhost:8509/api/uploads/9
+```
+
+- 成功响应：
+
+```json
+{
+  "code": 0,
+  "msg": "文件已删除",
+  "data": {
+    "id": 9,
+    "originalName": "sales.csv"
+  }
+}
+```
+
+- 内置示例文件删除受限（HTTP 409）：
+
+```json
+{
+  "code": 409,
+  "msg": "内置示例文件不可删除",
+  "data": {
+    "id": 1
+  }
+}
+```
+
+- 文件不存在返回 404，编号格式错误返回 400。
+- 修改时间：2026-11-12 15:50:00
+
+### AI 对话接口说明
+
+- 接口路径：`/api/chat`
+- HTTP 方法：`GET`
+- 请求参数：无
+- 请求示例：
+
+```http
+GET http://localhost:8509/api/chat
+```
+
+- 响应格式：
+
+```json
+{
+  "code": 0,
+  "msg": "AI 对话接口说明",
+  "data": {
+    "method": "POST",
+    "path": "/api/chat",
+    "model": "deepseek-ai/DeepSeek-V4-Flash",
+    "stream": false,
+    "messageLimit": 20,
+    "contentLimit": 4000,
+    "keyConfigured": true
+  }
+}
+```
+
+- 说明：`keyConfigured` 只表示后端环境变量中是否配置了密钥，不返回密钥内容，也不代表密钥一定有效。
+- 修改时间：2026-11-12 15:50:00
+
+### AI 对话
+
+- 接口路径：`/api/chat`
+- HTTP 方法：`POST`
+- 请求格式：`application/json`
+- 请求参数：
+
+| 参数 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| `messages` | array | 是 | 对话消息数组，最多 20 条，最后一条必须为 `user` |
+| `messages[].role` | string | 是 | 仅允许 `user` 或 `assistant` |
+| `messages[].content` | string | 是 | 消息内容，单条最多 4000 个字符 |
+
+- 后端环境变量：
+
+```dotenv
+SILICONFLOW_API_KEY=你的 SiliconFlow API Key
+SILICONFLOW_API_URL=https://api.siliconflow.cn/v1/chat/completions
+SILICONFLOW_MODEL=deepseek-ai/DeepSeek-V4-Flash
+```
+
+- 请求示例：
+
+```json
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "你好，请用一句话介绍你自己。"
+    }
+  ]
+}
+```
+
+- 成功响应：
+
+```json
+{
+  "code": 0,
+  "msg": "AI 回复成功",
+  "data": {
+    "reply": "我是云栖数据工坊的 AI 助手，可以帮你分析数据、编写 SQL 和优化前端页面。",
+    "model": "deepseek-ai/DeepSeek-V4-Flash",
+    "finishReason": "stop",
+    "usage": {
+      "promptTokens": 86,
+      "completionTokens": 42,
+      "totalTokens": 128
+    }
+  }
+}
+```
+
+- 上游鉴权失败响应（SiliconFlow 返回 401/403，后端映射为 502）：
+
+```json
+{
+  "code": 502,
+  "msg": "AI 服务鉴权失败，请检查后端 API Key 配置",
+  "data": {
+    "reason": "YAN_AI_UPSTREAM_ERROR",
+    "upstreamStatus": 401
+  }
+}
+```
+
+- 其他错误：消息格式错误返回 400；请求过于频繁返回 429；未配置密钥或网络不可用返回 503；上游超时返回 504。
+- 安全说明：API Key 仅从 `backend/.env` 读取，不写入前端代码、不返回给浏览器、不记录到日志。
+- 修改时间：2026-11-12 15:50:00

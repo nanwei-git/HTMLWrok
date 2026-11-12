@@ -1,0 +1,19 @@
+{
+  "_meta": {
+    "name": "杨庆鸿",
+    "studentId": "24002120509",
+    "createdAt": "2026-11-12",
+    "model": "DeepSeek V4.1 Flash Free"
+  },
+  "checkedAt": "2026-11-12 09:10:00",
+  "sources": [
+    { "name": "交易主库", "type": "MySQL", "status": "connected", "latencyMs": 18 },
+    { "name": "用户行为流", "type": "Kafka", "status": "connected", "latencyMs": 42 },
+    { "name": "商品中心", "type": "REST API", "status": "connected", "latencyMs": 76 },
+    { "name": "门店库存快照", "type": "CSV", "status": "syncing", "latencyMs": 0 },
+    { "name": "营销活动日志", "type": "PostgreSQL", "status": "connected", "latencyMs": 31 },
+    { "name": "旧版会员库", "type": "MySQL", "status": "error", "latencyMs": 0 },
+    { "name": "客服工单导出", "type": "CSV", "status": "connected", "latencyMs": 0 },
+    { "name": "财务对账文件", "type": "SFTP", "status": "connected", "latencyMs": 112 }
+  ]
+}

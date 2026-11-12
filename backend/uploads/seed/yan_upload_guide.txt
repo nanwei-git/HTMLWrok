@@ -1,0 +1,10 @@
+# 姓名：杨庆鸿 | 学号：24002120509
+# 时间：2026-11-12 | 大模型：DeepSeek V4.1 Flash Free
+云栖数据工坊文件上传说明
+
+1. 单个文件最大 10 MB。
+2. 支持 CSV、JSON、TXT、LOG、MD、XLS、XLSX、PDF、PNG、JPG、JPEG。
+3. 上传文件保存在 backend/uploads/runtime，文件元数据写入 yan_uploads 表。
+4. 示例文件保存在 backend/uploads/seed，仅用于列表展示，不允许删除。
+5. 上传时可选择分类并填写说明，分类会根据扩展名自动推荐。
+6. 请勿上传包含敏感个人信息或数据库凭据的文件。

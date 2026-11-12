@@ -242,3 +242,46 @@ VALUES
   (12, '零信任接入方案增加设备指纹动态校验', '方案将设备指纹与风险评分结合，在登录和敏感操作前执行差异化校验。', '36氪', '网络安全', '陈屿', '2026-11-01 11:00:00', 920, 'https://www.36kr.com', '2026-11-01 11:00:00');
 ```
 
+## 2026-11-12 15:30:00 | 文件上传模块
+
+- 新增 `yan_uploads` 表，用于保存上传文件元数据。
+- 插入 8 条示例文件记录，物理文件保存在 `backend/uploads/seed/`，示例记录不可删除。
+- 用户上传的物理文件保存在 `backend/uploads/runtime/`，该目录不提交到 Git。
+- 脚本会先删除 `yan_uploads` 后重建。
+
+```sql
+DROP TABLE IF EXISTS `yan_uploads`;
+
+CREATE TABLE `yan_uploads` (
+  `yan_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `yan_original_name` VARCHAR(255) NOT NULL COMMENT '原始文件名',
+  `yan_stored_name` VARCHAR(320) NOT NULL COMMENT '相对 uploads 目录的存储路径',
+  `yan_extension` VARCHAR(16) NOT NULL COMMENT '文件扩展名，不含点',
+  `yan_mime_type` VARCHAR(120) NOT NULL COMMENT '文件 MIME 类型',
+  `yan_size_bytes` BIGINT UNSIGNED NOT NULL COMMENT '文件大小（字节）',
+  `yan_category` ENUM('数据集', '报表', '日志', '文档', '图片', '其他') NOT NULL DEFAULT '其他' COMMENT '文件分类',
+  `yan_description` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '文件说明',
+  `yan_uploader` VARCHAR(40) NOT NULL DEFAULT '杨庆鸿' COMMENT '上传人',
+  `yan_is_seed` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '是否为内置示例文件',
+  `yan_uploaded_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '上传时间',
+  `yan_created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间',
+  PRIMARY KEY (`yan_id`),
+  UNIQUE KEY `yan_uk_uploads_stored_name` (`yan_stored_name`),
+  KEY `yan_idx_uploads_category` (`yan_category`),
+  KEY `yan_idx_uploads_uploaded_at` (`yan_uploaded_at`),
+  KEY `yan_idx_uploads_seed` (`yan_is_seed`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='上传文件元数据';
+
+INSERT INTO `yan_uploads`
+  (`yan_id`, `yan_original_name`, `yan_stored_name`, `yan_extension`, `yan_mime_type`, `yan_size_bytes`, `yan_category`, `yan_description`, `yan_uploader`, `yan_is_seed`, `yan_uploaded_at`, `yan_created_at`)
+VALUES
+  (1, 'yan_sales_channels_2026_11.csv', 'seed/yan_sales_channels_2026_11.csv', 'csv', 'text/csv', 543, '数据集', '11 月各渠道订单、成交额与退款率样例数据', '杨庆鸿', 1, '2026-11-12 08:05:00', '2026-11-12 08:05:00'),
+  (2, 'yan_user_growth_weekly.csv', 'seed/yan_user_growth_weekly.csv', 'csv', 'text/csv', 377, '数据集', '近 8 周新增用户、活跃用户与次周留存率', '杨庆鸿', 1, '2026-11-11 18:20:00', '2026-11-11 18:20:00'),
+  (3, 'yan_inventory_risk.json', 'seed/yan_inventory_risk.json', 'json', 'application/json', 793, '数据集', '华东一号仓库存风险快照与安全库存阈值', '杨庆鸿', 1, '2026-11-11 10:15:00', '2026-11-11 10:15:00'),
+  (4, 'yan_quality_checks.csv', 'seed/yan_quality_checks.csv', 'csv', 'text/csv', 451, '报表', '数据质量规则扫描结果与通过率汇总', '杨庆鸿', 1, '2026-11-10 16:40:00', '2026-11-10 16:40:00'),
+  (5, 'yan_workflow_run_logs.txt', 'seed/yan_workflow_run_logs.txt', 'txt', 'text/plain', 964, '日志', '工作流调度与执行过程日志样例', '杨庆鸿', 1, '2026-11-10 09:05:00', '2026-11-10 09:05:00'),
+  (6, 'yan_data_dictionary.md', 'seed/yan_data_dictionary.md', 'md', 'text/markdown', 1115, '文档', '订单、用户增长相关表字段与质量规则说明', '杨庆鸿', 1, '2026-11-09 15:30:00', '2026-11-09 15:30:00'),
+  (7, 'yan_source_health.json', 'seed/yan_source_health.json', 'json', 'application/json', 943, '报表', '数据源连接状态与接口延迟巡检结果', '杨庆鸿', 1, '2026-11-09 11:10:00', '2026-11-09 11:10:00'),
+  (8, 'yan_upload_guide.txt', 'seed/yan_upload_guide.txt', 'txt', 'text/plain', 591, '文档', '文件上传大小、类型与存储路径说明', '杨庆鸿', 1, '2026-11-08 14:00:00', '2026-11-08 14:00:00');
+```
+

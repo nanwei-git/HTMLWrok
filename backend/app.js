@@ -6,6 +6,7 @@ const yan_dotenv = require('dotenv');
 const yan_express = require('express');
 const yan_cors = require('cors');
 const yan_api_router = require('./routes/yan_api');
+const { yan_upload_root } = require('./config/yan_uploadConfig');
 const {
   yan_not_found_handler,
   yan_error_handler
@@ -21,6 +22,14 @@ yan_app.use(yan_express.json({ limit: '1mb' }));
 yan_app.use(yan_express.urlencoded({ extended: true, limit: '1mb' }));
 
 yan_app.use('/api', yan_api_router);
+yan_app.use(
+  '/uploads',
+  yan_express.static(yan_upload_root, {
+    dotfiles: 'deny',
+    index: false,
+    maxAge: 0
+  })
+);
 yan_app.use(yan_express.static(yan_path.join(__dirname, '..', 'frontend')));
 
 yan_app.use(yan_not_found_handler);

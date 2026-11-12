@@ -19,6 +19,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# 用户上传文件（保留内置示例文件）
+backend/uploads/runtime/
+
 # 编辑器与操作系统
 .vscode/
 .idea/

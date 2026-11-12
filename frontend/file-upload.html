@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<!--
+姓名：杨庆鸿 | 学号：24002120509
+时间：2026-11-12 | 大模型：DeepSeek V4.1 Flash Free
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="云栖数据工坊文件上传：拖拽或选择 CSV、JSON、Excel、PDF、图片等文件，上传到后端并查看文件库。">
+  <meta name="theme-color" content="#06121a">
+  <title>文件上传 | 云栖数据工坊</title>
+  <link rel="icon" type="image/svg+xml" href="images/yan_favicon.svg">
+  <link rel="stylesheet" href="css/yan_main.css">
+</head>
+<body class="yan_page">
+  <a class="yan_skip-link" href="#yan_main">跳到主要内容</a>
+
+  <canvas class="yan_canvas" id="yan_canvas" aria-hidden="true"></canvas>
+  <div class="yan_glow yan_glow--one" aria-hidden="true"></div>
+  <div class="yan_glow yan_glow--two" aria-hidden="true"></div>
+
+  <header class="yan_header">
+    <a class="yan_brand" href="index.html" aria-label="云栖数据工坊首页">
+      <span class="yan_brand-mark">YQ</span>
+      <span class="yan_brand-text">
+        <strong>云栖数据工坊</strong>
+        <small>YUNQI DATA STUDIO</small>
+      </span>
+    </a>
+
+    <nav class="yan_top-nav" aria-label="主导航">
+      <a class="yan_top-nav-link" href="index.html">工作台</a>
+      <a class="yan_top-nav-link" href="workflows.html">工作流</a>
+      <a class="yan_top-nav-link" href="reports.html">报表中心</a>
+      <a class="yan_top-nav-link" href="data-sources.html">数据源</a>
+      <a class="yan_top-nav-link yan_top-nav-link--active" href="file-upload.html" aria-current="page">文件上传</a>
+      <a class="yan_top-nav-link" href="database.html">数据库</a>
+      <a class="yan_top-nav-link" href="tech-news.html">科技新闻</a>
+      <a class="yan_top-nav-link" href="ai-chat.html">AI 对话</a>
+      <a class="yan_top-nav-link" href="about.html">项目概览</a>
+    </nav>
+
+    <div class="yan_service-state" data-yan-service aria-live="polite">
+      <span class="yan_service-dot" aria-hidden="true"></span>
+      <span data-yan-service-text>连接中</span>
+    </div>
+  </header>
+
+  <main class="yan_main" id="yan_main">
+    <section class="yan_page-head" aria-labelledby="yan_page_title">
+      <a class="yan_breadcrumb" href="index.html">← 返回工作台</a>
+      <p class="yan_section-kicker">FILE INGESTION</p>
+      <h1 class="yan_page-title" id="yan_page_title">文件上传</h1>
+      <p class="yan_page-lead">
+        把 CSV、JSON、Excel、PDF 或图片拖进上传区，文件会保存到后端并写入 MySQL 元数据表。
+        页面支持上传进度、类型校验、分类筛选、下载与删除，示例文件不可删除。
+      </p>
+
+      <div class="yan_summary-inline" aria-label="文件库统计">
+        <span class="yan_summary-item">文件总数 <strong data-yan-upload-total>--</strong></span>
+        <span class="yan_summary-item">存储体积 <strong data-yan-upload-size>--</strong></span>
+        <span class="yan_summary-item">示例文件 <strong data-yan-upload-seed>--</strong></span>
+        <span class="yan_summary-item">分类数量 <strong data-yan-upload-categories>--</strong></span>
+      </div>
+    </section>
+
+    <div class="yan_api-bar">
+      <div class="yan_api-bar-main">
+        <span class="yan_api-bar-method">GET</span>
+        <a class="yan_api-url" data-yan-upload-api href="/api/uploads" target="_blank" rel="noopener">/api/uploads</a>
+      </div>
+      <span class="yan_api-bar-note">上传接口：POST /api/uploads · multipart/form-data</span>
+    </div>
+
+    <div class="yan_upload-grid">
+      <article class="yan_panel">
+        <header class="yan_panel-head">
+          <div>
+            <h2 class="yan_panel-title">上传新文件</h2>
+            <p class="yan_panel-sub">单个文件最大 10 MB，上传成功后立即进入文件库</p>
+          </div>
+          <span class="yan_panel-tag">UPLOAD FILE</span>
+        </header>
+
+        <form class="yan_form" data-yan-upload-form novalidate>
+          <label class="yan_dropzone" for="yan_upload_file" data-yan-dropzone>
+            <input
+              class="yan_upload-input"
+              id="yan_upload_file"
+              name="file"
+              type="file"
+              accept=".csv,.json,.txt,.log,.md,.xls,.xlsx,.pdf,.png,.jpg,.jpeg"
+              data-yan-upload-input
+            >
+            <span class="yan_dropzone-icon" aria-hidden="true">↥</span>
+            <span class="yan_dropzone-title">拖拽文件到这里，或点击选择</span>
+            <span class="yan_dropzone-text">支持 CSV、JSON、TXT、LOG、MD、XLS、XLSX、PDF、PNG、JPG、JPEG</span>
+            <span class="yan_dropzone-note">MAX 10 MB / SINGLE FILE</span>
+          </label>
+
+          <div class="yan_selected-file" data-yan-selected-file hidden>
+            <span class="yan_file-badge" data-yan-selected-extension>FILE</span>
+            <span class="yan_selected-info">
+              <strong class="yan_selected-name" data-yan-selected-name>--</strong>
+              <span class="yan_selected-meta" data-yan-selected-meta>--</span>
+            </span>
+            <button class="yan_remove-file" type="button" data-yan-remove-file aria-label="移除已选文件">×</button>
+          </div>
+
+          <div class="yan_inline-alert" data-yan-upload-alert hidden role="status" aria-live="polite">
+            <span class="yan_inline-alert-icon" data-yan-upload-alert-icon aria-hidden="true">·</span>
+            <span data-yan-upload-alert-text>等待选择文件</span>
+          </div>
+
+          <div class="yan_upload-progress" data-yan-upload-progress hidden>
+            <div class="yan_progress-head">
+              <span data-yan-upload-progress-label>准备上传</span>
+              <span data-yan-upload-progress-percent>0%</span>
+            </div>
+            <div class="yan_progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-yan-upload-progress-track>
+              <div class="yan_progress-bar" data-yan-upload-progress-bar></div>
+            </div>
+          </div>
+
+          <div class="yan_field">
+            <label class="yan_field-label" for="yan_upload_category">文件分类</label>
+            <select class="yan_input yan_select" id="yan_upload_category" name="category" data-yan-upload-category>
+              <option value="数据集">数据集</option>
+              <option value="报表">报表</option>
+              <option value="日志">日志</option>
+              <option value="文档">文档</option>
+              <option value="图片">图片</option>
+              <option value="其他">其他</option>
+            </select>
+            <p class="yan_field-hint">选择文件后会自动推荐分类，也可以手动调整。</p>
+          </div>
+
+          <div class="yan_field">
+            <label class="yan_field-label" for="yan_upload_description">文件说明</label>
+            <textarea
+              class="yan_input yan_textarea"
+              id="yan_upload_description"
+              name="description"
+              rows="3"
+              maxlength="200"
+              placeholder="例如：11 月渠道销售明细，用于经营日报分析"
+              data-yan-upload-description
+            ></textarea>
+            <span class="yan_field-count"><span data-yan-upload-count>0</span> / 200</span>
+          </div>
+
+          <div class="yan_form-actions">
+            <button class="yan_button yan_button--primary" type="submit" data-yan-upload-submit disabled>
+              开始上传
+            </button>
+            <button class="yan_button" type="button" data-yan-upload-reset>重置表单</button>
+            <button class="yan_button yan_button--danger" type="button" data-yan-upload-cancel hidden>
+              取消上传
+            </button>
+          </div>
+        </form>
+      </article>
+
+      <aside class="yan_upload-side" aria-label="上传说明">
+        <article class="yan_panel">
+          <div class="yan_info-panel">
+            <h2 class="yan_info-title">接口信息</h2>
+            <div class="yan_api-box">
+              <span class="yan_api-box-label">GET /api/uploads</span>
+              <a class="yan_api-url" data-yan-upload-list-api href="/api/uploads" target="_blank" rel="noopener">/api/uploads</a>
+            </div>
+            <div class="yan_api-box" style="margin-top: 9px;">
+              <span class="yan_api-box-label">POST /api/uploads</span>
+              <span class="yan_api-url">multipart/form-data · file / category / description</span>
+            </div>
+            <p class="yan_state-text" style="text-align: left; margin-top: 14px;">
+              上传文件保存在 <code>backend/uploads/runtime</code>，文件信息写入 <code>yan_uploads</code> 表。
+            </p>
+          </div>
+        </article>
+
+        <article class="yan_panel">
+          <div class="yan_info-panel">
+            <h2 class="yan_info-title">上传规则</h2>
+            <ul class="yan_upload-rule-list">
+              <li><span class="yan_upload-rule-index">01</span><span>单文件最大 10 MB，一次上传一个文件。</span></li>
+              <li><span class="yan_upload-rule-index">02</span><span>支持数据文件、文档、日志与常用图片格式。</span></li>
+              <li><span class="yan_upload-rule-index">03</span><span>文件分类会写入数据库，可按分类筛选。</span></li>
+              <li><span class="yan_upload-rule-index">04</span><span>内置示例文件可用于下载，但不能删除。</span></li>
+            </ul>
+          </div>
+        </article>
+      </aside>
+    </div>
+
+    <section class="yan_section" aria-labelledby="yan_upload_list_title">
+      <div class="yan_section-head">
+        <div>
+          <p class="yan_section-kicker">FILE LIBRARY</p>
+          <h2 class="yan_section-title" id="yan_upload_list_title">文件库</h2>
+        </div>
+        <p class="yan_section-note">文件元数据来自 MySQL 表 yan_uploads，示例文件随项目内置。</p>
+      </div>
+
+      <div class="yan_state-box yan_state-box--error" data-yan-error hidden>
+        <span class="yan_state-icon" aria-hidden="true">!</span>
+        <h2 class="yan_state-title">文件列表加载失败</h2>
+        <p class="yan_state-text" data-yan-error-text>请确认后端服务已启动，并检查浏览器控制台。</p>
+      </div>
+
+      <div class="yan_filters" data-yan-upload-filters role="group" aria-label="按文件分类筛选">
+        <button class="yan_filter yan_filter--active" type="button" data-yan-upload-filter="all">全部分类</button>
+      </div>
+
+      <div class="yan_upload-list" data-yan-upload-list aria-live="polite">
+        <div class="yan_skeleton" style="margin: 18px 0;"></div>
+        <div class="yan_skeleton" style="margin: 0 0 18px;"></div>
+        <div class="yan_skeleton"></div>
+      </div>
+
+      <details class="yan_details" style="margin-top: 24px;">
+        <summary>查看文件列表接口原始返回数据</summary>
+        <pre class="yan_json" data-yan-upload-json>{}</pre>
+      </details>
+    </section>
+  </main>
+
+  <footer class="yan_footer">
+    <p>© <span id="yan_year">2026</span> 云栖数据工坊 · 数据分析报表工作流平台</p>
+    <div class="yan_footer-links">
+      <span>杨庆鸿 · 24002120509</span>
+      <a href="data-sources.html">数据源</a>
+      <a href="tech-news.html">科技新闻</a>
+      <a href="about.html">项目概览</a>
+    </div>
+  </footer>
+
+  <noscript>
+    <p>当前浏览器未启用 JavaScript，文件上传与文件库将无法使用。</p>
+  </noscript>
+
+  <script src="js/yan_main.js" defer></script>
+  <script src="js/yan_upload.js" defer></script>
+</body>
+</html>

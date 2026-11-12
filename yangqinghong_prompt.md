@@ -107,3 +107,31 @@ root,密码123456。完成科技新闻列表页面，新闻的数据存在数据
 ```text
 继续
 ```
+
+## 2026-11-12 15:19:30 | DeepSeek V4.1 Flash Free
+
+### 提示词全文
+
+```text
+继续完善文件上传部分功能
+```
+
+## 2026-11-12 15:50:13 | DeepSeek V4.1 Flash Free
+
+### 提示词全文
+
+```text
+创建AI聊天页面。
+Api-key：[API Key 已脱敏，仅写入 backend/.env]
+curl --request POST \
+  --url https://api.siliconflow.cn/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+    "model": "deepseek-ai/DeepSeek-V4-Flash",
+    "messages": [
+      {"role": "system", "content": "你是一个有用的助手"},
+      {"role": "user", "content": "你好，请介绍一下你自己"}
+    ]
+  }'
+```

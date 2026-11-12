@@ -1,0 +1,17 @@
+{
+  "_meta": {
+    "name": "杨庆鸿",
+    "studentId": "24002120509",
+    "createdAt": "2026-11-12",
+    "model": "DeepSeek V4.1 Flash Free"
+  },
+  "snapshotAt": "2026-11-12 08:30:00",
+  "warehouse": "华东一号仓",
+  "items": [
+    { "sku": "YQ-1001", "name": "轻量数据采集器", "stock": 38, "safetyStock": 60, "status": "warning" },
+    { "sku": "YQ-1002", "name": "边缘计算网关", "stock": 12, "safetyStock": 30, "status": "critical" },
+    { "sku": "YQ-1003", "name": "工业温控传感器", "stock": 142, "safetyStock": 80, "status": "normal" },
+    { "sku": "YQ-1004", "name": "高密度存储模块", "stock": 26, "safetyStock": 40, "status": "warning" },
+    { "sku": "YQ-1005", "name": "冗余电源组件", "stock": 96, "safetyStock": 50, "status": "normal" }
+  ]
+}

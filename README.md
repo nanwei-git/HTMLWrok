@@ -13,14 +13,14 @@
 | 项目类别 | 自选 |
 | 姓名 | 杨庆鸿 |
 | 学号 | 24002120509 |
-| 技术栈 | 原生 HTML / CSS / JavaScript、Node.js、Express、MySQL |
+| 技术栈 | 原生 HTML / CSS / JavaScript、Node.js、Express、MySQL、SiliconFlow |
 | 服务端口 | 8509 |
 
 ## 项目简介
 
 云栖数据工坊围绕「数据源 → 工作流 → 报表」组织分析工作。工作台展示实时运营指标与最近动态；工作流中心呈现调度、步骤与执行成功率；报表中心承载趋势与摘要；数据源页面统一展示连接状态与同步规模。
 
-平台包含 6 张 MySQL 业务表、8 条数据源测试数据、8 个工作流、26 个步骤、10 份报表、12 条运行记录与 12 条科技新闻。工作流支持手动运行，执行后会写入新的运行记录并重新计算成功率；数据库连接页可验证 MySQL 凭据，科技新闻页展示数据库中的新闻与接口原始数据。
+平台包含 7 张 MySQL 业务表、8 条数据源测试数据、8 个工作流、26 个步骤、10 份报表、12 条运行记录、12 条科技新闻与 8 个内置示例文件。工作流支持手动运行，执行后会写入新的运行记录并重新计算成功率；数据库连接页可验证 MySQL 凭据，科技新闻页展示数据库中的新闻与接口原始数据，文件上传页支持拖拽上传、进度展示、分类、下载与删除，AI 对话页通过后端代理连接 SiliconFlow 大模型。
 
 ## 页面
 
@@ -32,16 +32,21 @@
 | 报表中心 | `/reports.html` | 报表分类、状态筛选与迷你趋势 |
 | 报表详情 | `/report-detail.html?id=1` | SVG 趋势图、摘要与生成链路 |
 | 数据源 | `/data-sources.html` | 数据源连接状态与同步信息 |
+| 文件上传 | `/file-upload.html` | 拖拽上传、进度、分类、文件库、下载与删除 |
 | 数据库连接 | `/database.html` | 输入 MySQL 用户名与密码，测试连接并查看接口返回 |
 | 科技新闻 | `/tech-news.html` | 科技新闻列表、分类筛选、接口链接与原始数据 |
+| AI 对话 | `/ai-chat.html` | 通过后端代理连接 DeepSeek，支持多轮上下文与安全密钥托管 |
 | 项目概览 | `/about.html` | 项目定位、分析链路与系统架构 |
 
-`index.html` 提供工作流、报表、数据源、数据库连接、科技新闻与项目概览的入口；工作流详情和报表详情由对应列表页进入。
+`index.html` 提供工作流、报表、数据源、文件上传、数据库连接、科技新闻、AI 对话与项目概览的入口；工作流详情和报表详情由对应列表页进入。
 
 ## 技术栈
 
 - **前端**：原生 HTML、CSS、JavaScript，不使用第三方库、框架或 CDN。Canvas 用于背景动画，SVG 用于报表趋势图。
+- **后台管理**：工作流、报表、数据源与文件上传均提供列表、详情或操作界面；文件上传使用 `XMLHttpRequest` 展示进度。
 - **后端**：Node.js + Express，采用 RESTful + MVC 分层，所有接口以 `/api/` 为前缀。
+- **文件上传**：Multer 处理 `multipart/form-data`，限制单文件 10 MB，文件保存到后端目录，元数据写入 MySQL。
+- **AI 对话**：浏览器请求本站 `/api/chat`，Express 使用后端环境变量中的 SiliconFlow API Key 转发请求，密钥不进入前端。
 - **数据库**：MySQL，表名与字段统一使用 `yan_` 前缀。
 - **静态托管**：Express 通过 `express.static` 托管 `frontend/` 目录。
 - **跨域**：后端允许所有来源跨域访问。
@@ -59,8 +64,10 @@ web_work/
 │  ├─ js/yan_reports.js
 │  ├─ js/yan_report_detail.js
 │  ├─ js/yan_sources.js
+│  ├─ js/yan_upload.js
 │  ├─ js/yan_database.js
 │  ├─ js/yan_news.js
+│  ├─ js/yan_chat.js
 │  ├─ fonts/
 │  ├─ images/
 │  ├─ index.html
@@ -69,15 +76,22 @@ web_work/
 │  ├─ reports.html
 │  ├─ report-detail.html
 │  ├─ data-sources.html
+│  ├─ file-upload.html
 │  ├─ database.html
 │  ├─ tech-news.html
+│  ├─ ai-chat.html
 │  └─ about.html
 ├─ backend/
 │  ├─ config/yan_db.js
+│  ├─ config/yan_uploadConfig.js
+│  ├─ config/yan_ai.js
 │  ├─ controllers/
 │  ├─ middleware/
 │  ├─ models/
 │  ├─ routes/yan_api.js
+│  ├─ uploads/
+│  │  ├─ seed/
+│  │  └─ runtime/
 │  ├─ app.js
 │  ├─ server.js
 │  ├─ yan_database.md
@@ -107,16 +121,20 @@ npm i
 
 ### 2. 配置环境变量
 
-将 `backend/.env.example` 复制为 `backend/.env`，填写本地 MySQL 信息：
+将 `backend/.env.example` 复制为 `backend/.env`，填写本地 MySQL 信息与 SiliconFlow 密钥：
 
 ```dotenv
 DB_USER=你的数据库用户名
 DB_PASSWORD=你的数据库密码
 DB_HOST=127.0.0.1
 DB_NAME=yan_report_platform
+
+SILICONFLOW_API_KEY=你的 SiliconFlow API Key
+SILICONFLOW_API_URL=https://api.siliconflow.cn/v1/chat/completions
+SILICONFLOW_MODEL=deepseek-ai/DeepSeek-V4-Flash
 ```
 
-`backend/.env` 已被 `.gitignore` 忽略，不会提交到仓库。
+`backend/.env` 已被 `.gitignore` 忽略，不会提交到仓库。AI 对话页面不会读取或展示 API Key，所有模型请求均由后端转发。
 
 ### 3. 初始化数据库
 
@@ -139,8 +157,10 @@ Windows 用户也可以直接双击项目根目录的 `start.bat`。脚本会自
 - 工作流中心：<http://localhost:8509/workflows.html>
 - 报表中心：<http://localhost:8509/reports.html>
 - 数据源：<http://localhost:8509/data-sources.html>
+- 文件上传：<http://localhost:8509/file-upload.html>
 - 数据库连接：<http://localhost:8509/database.html>
 - 科技新闻：<http://localhost:8509/tech-news.html>
+- AI 对话：<http://localhost:8509/ai-chat.html>
 - 项目概览：<http://localhost:8509/about.html>
 - 健康检查：<http://localhost:8509/api/health>
 
@@ -168,9 +188,14 @@ Windows 用户也可以直接双击项目根目录的 `start.bat`。脚本会自
 | GET | `/api/reports` | 报表列表，支持 `category`、`status` 筛选 |
 | GET | `/api/reports/:id` | 报表详情与趋势数据 |
 | GET | `/api/data-sources` | 数据源列表与汇总 |
+| GET | `/api/uploads` | 文件列表与统计，支持 `category` 筛选 |
+| POST | `/api/uploads` | 上传单个文件（multipart/form-data，最大 10 MB） |
+| DELETE | `/api/uploads/:id` | 删除用户上传文件 |
 | GET | `/api/database/test` | 数据库连接测试接口说明 |
 | POST | `/api/database/test` | 使用传入的 MySQL 凭据测试连接 |
 | GET | `/api/tech-news` | 科技新闻列表，支持 `category` 筛选 |
+| GET | `/api/chat` | AI 对话接口说明、模型与密钥配置状态 |
+| POST | `/api/chat` | 转发多轮对话到 SiliconFlow 并返回模型回复 |
 
 完整请求参数与响应示例见 `backend/yan_interface.md`。
 
@@ -184,6 +209,7 @@ Windows 用户也可以直接双击项目根目录的 `start.bat`。脚本会自
 | `yan_reports` | 分析报表与趋势 JSON |
 | `yan_workflow_runs` | 工作流运行记录 |
 | `yan_tech_news` | 科技新闻与来源信息 |
+| `yan_uploads` | 上传文件元数据与分类 |
 
 完整 SQL 见 `backend/yan_database.md`。
 

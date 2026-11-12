@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<!--
+姓名：杨庆鸿 | 学号：24002120509
+时间：2026-11-12 | 大模型：DeepSeek V4.1 Flash Free
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="云栖数据工坊 AI 对话：通过后端代理连接 DeepSeek 大模型，咨询数据分析、SQL、工作流与前端开发问题。">
+  <meta name="theme-color" content="#06121a">
+  <title>AI 对话 | 云栖数据工坊</title>
+  <link rel="icon" type="image/svg+xml" href="images/yan_favicon.svg">
+  <link rel="stylesheet" href="css/yan_main.css">
+</head>
+<body class="yan_page">
+  <a class="yan_skip-link" href="#yan_main">跳到主要内容</a>
+
+  <canvas class="yan_canvas" id="yan_canvas" aria-hidden="true"></canvas>
+  <div class="yan_glow yan_glow--one" aria-hidden="true"></div>
+  <div class="yan_glow yan_glow--two" aria-hidden="true"></div>
+
+  <header class="yan_header">
+    <a class="yan_brand" href="index.html" aria-label="云栖数据工坊首页">
+      <span class="yan_brand-mark">YQ</span>
+      <span class="yan_brand-text">
+        <strong>云栖数据工坊</strong>
+        <small>YUNQI DATA STUDIO</small>
+      </span>
+    </a>
+
+    <nav class="yan_top-nav" aria-label="主导航">
+      <a class="yan_top-nav-link" href="index.html">工作台</a>
+      <a class="yan_top-nav-link" href="workflows.html">工作流</a>
+      <a class="yan_top-nav-link" href="reports.html">报表中心</a>
+      <a class="yan_top-nav-link" href="data-sources.html">数据源</a>
+      <a class="yan_top-nav-link" href="file-upload.html">文件上传</a>
+      <a class="yan_top-nav-link" href="database.html">数据库</a>
+      <a class="yan_top-nav-link" href="tech-news.html">科技新闻</a>
+      <a class="yan_top-nav-link yan_top-nav-link--active" href="ai-chat.html" aria-current="page">AI 对话</a>
+      <a class="yan_top-nav-link" href="about.html">项目概览</a>
+    </nav>
+
+    <div class="yan_service-state" data-yan-service aria-live="polite">
+      <span class="yan_service-dot" aria-hidden="true"></span>
+      <span data-yan-service-text>连接中</span>
+    </div>
+  </header>
+
+  <main class="yan_main" id="yan_main">
+    <section class="yan_page-head" aria-labelledby="yan_page_title">
+      <a class="yan_breadcrumb" href="index.html">← 返回工作台</a>
+      <p class="yan_section-kicker">AI ASSISTANT</p>
+      <h1 class="yan_page-title" id="yan_page_title">AI 对话</h1>
+      <p class="yan_page-lead">
+        向云栖 AI 助手咨询数据分析、MySQL、工作流编排或原生前端开发问题。
+        浏览器只与本站后端通信，SiliconFlow API Key 保存在后端环境变量中，不会出现在页面源码或网络请求里。
+      </p>
+
+      <div class="yan_summary-inline" aria-label="AI 对话配置">
+        <span class="yan_summary-item">模型 <strong data-yan-chat-model>DeepSeek V4 Flash</strong></span>
+        <span class="yan_summary-item">上下文 <strong>20 条</strong></span>
+        <span class="yan_summary-item">单条消息 <strong>4000 字</strong></span>
+        <span class="yan_summary-item">密钥托管 <strong>后端 .env</strong></span>
+      </div>
+    </section>
+
+    <div class="yan_api-bar">
+      <div class="yan_api-bar-main">
+        <span class="yan_api-bar-method">GET</span>
+        <a class="yan_api-url" data-yan-chat-api href="/api/chat" target="_blank" rel="noopener">/api/chat</a>
+      </div>
+      <span class="yan_api-bar-note">对话接口：POST /api/chat · application/json</span>
+    </div>
+
+    <div class="yan_chat-grid">
+      <section class="yan_panel yan_chat-panel" aria-labelledby="yan_chat_title">
+        <header class="yan_chat-head">
+          <div class="yan_chat-persona">
+            <span class="yan_chat-avatar yan_chat-avatar--ai" aria-hidden="true">AI</span>
+            <span>
+              <strong class="yan_chat-persona-name" id="yan_chat_title">云栖 AI 助手</strong>
+              <small class="yan_chat-persona-note">DeepSeek V4 Flash · 后端安全代理</small>
+            </span>
+          </div>
+          <span class="yan_chat-status" data-yan-chat-status>
+            <span class="yan_chat-status-dot" aria-hidden="true"></span>
+            <span data-yan-chat-status-text>连接中</span>
+          </span>
+        </header>
+
+        <div class="yan_chat-window" data-yan-chat-window>
+          <div class="yan_chat-welcome" data-yan-chat-welcome>
+            <span class="yan_chat-welcome-icon" aria-hidden="true">✦</span>
+            <h2 class="yan_chat-welcome-title">今天想分析什么？</h2>
+            <p class="yan_chat-welcome-text">
+              可以让我解释数据指标、编写 SQL、梳理工作流步骤，或者帮你检查前端页面代码。
+            </p>
+            <div class="yan_chat-suggestions" data-yan-chat-suggestions>
+              <button class="yan_chat-suggestion" type="button" data-yan-chat-suggestion>
+                分析本周销售渠道趋势
+              </button>
+              <button class="yan_chat-suggestion" type="button" data-yan-chat-suggestion>
+                写一段数据质量检查 SQL
+              </button>
+              <button class="yan_chat-suggestion" type="button" data-yan-chat-suggestion>
+                给文件上传页面提三点优化建议
+              </button>
+            </div>
+          </div>
+          <div class="yan_chat-messages" data-yan-chat-messages aria-live="polite"></div>
+        </div>
+
+        <form class="yan_chat-composer" data-yan-chat-form>
+          <label class="yan_sr-only" for="yan_chat_input">输入对话内容</label>
+          <textarea
+            class="yan_input yan_chat-input"
+            id="yan_chat_input"
+            rows="1"
+            maxlength="4000"
+            placeholder="输入问题，Enter 发送，Shift + Enter 换行…"
+            data-yan-chat-input
+          ></textarea>
+          <div class="yan_chat-composer-bar">
+            <span class="yan_chat-hint">Enter 发送 · Shift + Enter 换行</span>
+            <div class="yan_chat-actions">
+              <span class="yan_chat-count"><span data-yan-chat-count>0</span> / 4000</span>
+              <button class="yan_button yan_button--small yan_button--danger" type="button" data-yan-chat-stop hidden>
+                停止等待
+              </button>
+              <button class="yan_button yan_button--small" type="button" data-yan-chat-clear>
+                清空对话
+              </button>
+              <button class="yan_button yan_button--primary yan_button--small" type="submit" data-yan-chat-send disabled>
+                发送
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <p class="yan_chat-footnote">
+          对话上下文仅保留在当前页面内存中，刷新页面后会清空；请勿发送密码、API Key 等敏感信息。
+        </p>
+      </section>
+
+      <aside class="yan_chat-side" aria-label="AI 对话说明">
+        <article class="yan_panel">
+          <div class="yan_info-panel">
+            <h2 class="yan_info-title">接口信息</h2>
+            <div class="yan_api-box">
+              <span class="yan_api-box-label">GET /api/chat</span>
+              <a class="yan_api-url" data-yan-chat-info-api href="/api/chat" target="_blank" rel="noopener">/api/chat</a>
+            </div>
+            <div class="yan_api-box" style="margin-top: 9px;">
+              <span class="yan_api-box-label">POST /api/chat</span>
+              <span class="yan_api-url">messages[] · 最多 20 条</span>
+            </div>
+            <div class="yan_chat-config">
+              <span>当前模型</span>
+              <strong data-yan-chat-model-code>deepseek-ai/DeepSeek-V4-Flash</strong>
+            </div>
+            <div class="yan_chat-config">
+              <span>密钥状态</span>
+              <strong data-yan-chat-key-status>正在检查</strong>
+            </div>
+            <p class="yan_state-text" style="text-align: left; margin-top: 14px;">
+              API Key 仅由 Express 后端读取，并通过服务端请求转发到 SiliconFlow。
+            </p>
+          </div>
+        </article>
+
+        <article class="yan_panel">
+          <div class="yan_info-panel">
+            <h2 class="yan_info-title">提问建议</h2>
+            <ul class="yan_upload-rule-list">
+              <li><span class="yan_upload-rule-index">01</span><span>说明背景、目标与已有数据，回答会更准确。</span></li>
+              <li><span class="yan_upload-rule-index">02</span><span>需要代码时，注明运行环境与期望输出。</span></li>
+              <li><span class="yan_upload-rule-index">03</span><span>长对话会自动保留最近 20 条消息作为上下文。</span></li>
+              <li><span class="yan_upload-rule-index">04</span><span>模型回复可能存在偏差，关键结论请人工复核。</span></li>
+            </ul>
+          </div>
+        </article>
+      </aside>
+    </div>
+
+    <section class="yan_section" aria-labelledby="yan_chat_raw_title">
+      <div class="yan_section-head">
+        <div>
+          <p class="yan_section-kicker">RESPONSE INSPECTOR</p>
+          <h2 class="yan_section-title" id="yan_chat_raw_title">接口返回</h2>
+        </div>
+        <p class="yan_section-note">查看接口配置与最近一次对话响应，便于调试模型参数。</p>
+      </div>
+
+      <details class="yan_details" open>
+        <summary>查看 AI 接口返回数据</summary>
+        <pre class="yan_json" data-yan-chat-json>等待接口数据…</pre>
+      </details>
+    </section>
+  </main>
+
+  <footer class="yan_footer">
+    <p>© <span id="yan_year">2026</span> 云栖数据工坊 · 数据分析报表工作流平台</p>
+    <div class="yan_footer-links">
+      <span>杨庆鸿 · 24002120509</span>
+      <a href="tech-news.html">科技新闻</a>
+      <a href="file-upload.html">文件上传</a>
+      <a href="about.html">项目概览</a>
+    </div>
+  </footer>
+
+  <noscript>
+    <p>当前浏览器未启用 JavaScript，AI 对话将无法使用。</p>
+  </noscript>
+
+  <script src="js/yan_main.js" defer></script>
+  <script src="js/yan_chat.js" defer></script>
+</body>
+</html>
