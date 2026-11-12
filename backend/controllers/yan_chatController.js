@@ -11,6 +11,7 @@ function yan_get_chat_info(yan_req, yan_res) {
     data: {
       method: 'POST',
       path: '/api/chat',
+      provider: yan_ai_settings.provider,
       model: yan_ai_settings.model,
       stream: false,
       messageLimit: yan_ai_settings.maxMessages,

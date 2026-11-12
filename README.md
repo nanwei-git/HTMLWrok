@@ -13,14 +13,14 @@
 | 项目类别 | 自选 |
 | 姓名 | 杨庆鸿 |
 | 学号 | 24002120509 |
-| 技术栈 | 原生 HTML / CSS / JavaScript、Node.js、Express、MySQL、SiliconFlow |
+| 技术栈 | 原生 HTML / CSS / JavaScript、Node.js、Express、MySQL、DeepSeek / SiliconFlow 兼容接口 |
 | 服务端口 | 8509 |
 
 ## 项目简介
 
 云栖数据工坊围绕「数据源 → 工作流 → 报表」组织分析工作。工作台展示实时运营指标与最近动态；工作流中心呈现调度、步骤与执行成功率；报表中心承载趋势与摘要；数据源页面统一展示连接状态与同步规模。
 
-平台包含 7 张 MySQL 业务表、8 条数据源测试数据、8 个工作流、26 个步骤、10 份报表、12 条运行记录、12 条科技新闻与 8 个内置示例文件。工作流支持手动运行，执行后会写入新的运行记录并重新计算成功率；数据库连接页可验证 MySQL 凭据，科技新闻页展示数据库中的新闻与接口原始数据，文件上传页支持拖拽上传、进度展示、分类、下载与删除，AI 对话页通过后端代理连接 SiliconFlow 大模型。
+平台包含 7 张 MySQL 业务表、8 条数据源测试数据、8 个工作流、26 个步骤、10 份报表、12 条运行记录、12 条科技新闻与 8 个内置示例文件。工作流支持手动运行，执行后会写入新的运行记录并重新计算成功率；数据库连接页可验证 MySQL 凭据，科技新闻页展示数据库中的新闻与接口原始数据，文件上传页支持拖拽上传、进度展示、分类、下载与删除，AI 对话页通过后端代理连接 DeepSeek 等兼容 OpenAI Chat Completions 协议的大模型服务。
 
 ## 页面
 
@@ -46,7 +46,7 @@
 - **后台管理**：工作流、报表、数据源与文件上传均提供列表、详情或操作界面；文件上传使用 `XMLHttpRequest` 展示进度。
 - **后端**：Node.js + Express，采用 RESTful + MVC 分层，所有接口以 `/api/` 为前缀。
 - **文件上传**：Multer 处理 `multipart/form-data`，限制单文件 10 MB，文件保存到后端目录，元数据写入 MySQL。
-- **AI 对话**：浏览器请求本站 `/api/chat`，Express 使用后端环境变量中的 SiliconFlow API Key 转发请求，密钥不进入前端。
+- **AI 对话**：浏览器请求本站 `/api/chat`，Express 使用后端环境变量中的 AI 服务 API Key 转发请求，密钥不进入前端。当前默认适配 DeepSeek 官方接口，也可切换到 SiliconFlow 等兼容服务。
 - **数据库**：MySQL，表名与字段统一使用 `yan_` 前缀。
 - **静态托管**：Express 通过 `express.static` 托管 `frontend/` 目录。
 - **跨域**：后端允许所有来源跨域访问。
@@ -121,7 +121,7 @@ npm i
 
 ### 2. 配置环境变量
 
-将 `backend/.env.example` 复制为 `backend/.env`，填写本地 MySQL 信息与 SiliconFlow 密钥：
+将 `backend/.env.example` 复制为 `backend/.env`，填写本地 MySQL 信息与 AI 服务信息：
 
 ```dotenv
 DB_USER=你的数据库用户名
@@ -129,10 +129,12 @@ DB_PASSWORD=你的数据库密码
 DB_HOST=127.0.0.1
 DB_NAME=yan_report_platform
 
-SILICONFLOW_API_KEY=你的 SiliconFlow API Key
-SILICONFLOW_API_URL=https://api.siliconflow.cn/v1/chat/completions
-SILICONFLOW_MODEL=deepseek-ai/DeepSeek-V4-Flash
+AI_API_KEY=你的 AI 服务 API Key
+AI_API_URL=https://api.deepseek.com/chat/completions
+AI_MODEL=deepseek-flash
 ```
+
+默认示例使用 DeepSeek 官方接口；如果要使用 SiliconFlow，请将 `AI_API_URL` 改为 `https://api.siliconflow.cn/v1/chat/completions`，并将 `AI_MODEL` 改为对应的 SiliconFlow 模型名。
 
 `backend/.env` 已被 `.gitignore` 忽略，不会提交到仓库。AI 对话页面不会读取或展示 API Key，所有模型请求均由后端转发。
 
@@ -194,8 +196,8 @@ Windows 用户也可以直接双击项目根目录的 `start.bat`。脚本会自
 | GET | `/api/database/test` | 数据库连接测试接口说明 |
 | POST | `/api/database/test` | 使用传入的 MySQL 凭据测试连接 |
 | GET | `/api/tech-news` | 科技新闻列表，支持 `category` 筛选 |
-| GET | `/api/chat` | AI 对话接口说明、模型与密钥配置状态 |
-| POST | `/api/chat` | 转发多轮对话到 SiliconFlow 并返回模型回复 |
+| GET | `/api/chat` | AI 对话接口说明、服务商、模型与密钥配置状态 |
+| POST | `/api/chat` | 转发多轮对话到配置的 AI 服务并返回模型回复 |
 
 完整请求参数与响应示例见 `backend/yan_interface.md`。
 

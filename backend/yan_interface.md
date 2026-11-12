@@ -808,7 +808,8 @@ GET http://localhost:8509/api/chat
   "data": {
     "method": "POST",
     "path": "/api/chat",
-    "model": "deepseek-ai/DeepSeek-V4-Flash",
+    "provider": "DeepSeek",
+    "model": "deepseek-flash",
     "stream": false,
     "messageLimit": 20,
     "contentLimit": 4000,
@@ -818,7 +819,7 @@ GET http://localhost:8509/api/chat
 ```
 
 - 说明：`keyConfigured` 只表示后端环境变量中是否配置了密钥，不返回密钥内容，也不代表密钥一定有效。
-- 修改时间：2026-11-12 15:50:00
+- 修改时间：2026-11-12 16:20:00
 
 ### AI 对话
 
@@ -836,9 +837,9 @@ GET http://localhost:8509/api/chat
 - 后端环境变量：
 
 ```dotenv
-SILICONFLOW_API_KEY=你的 SiliconFlow API Key
-SILICONFLOW_API_URL=https://api.siliconflow.cn/v1/chat/completions
-SILICONFLOW_MODEL=deepseek-ai/DeepSeek-V4-Flash
+AI_API_KEY=你的 AI 服务 API Key
+AI_API_URL=https://api.deepseek.com/chat/completions
+AI_MODEL=deepseek-flash
 ```
 
 - 请求示例：
@@ -862,7 +863,7 @@ SILICONFLOW_MODEL=deepseek-ai/DeepSeek-V4-Flash
   "msg": "AI 回复成功",
   "data": {
     "reply": "我是云栖数据工坊的 AI 助手，可以帮你分析数据、编写 SQL 和优化前端页面。",
-    "model": "deepseek-ai/DeepSeek-V4-Flash",
+    "model": "deepseek-flash",
     "finishReason": "stop",
     "usage": {
       "promptTokens": 86,
@@ -873,7 +874,7 @@ SILICONFLOW_MODEL=deepseek-ai/DeepSeek-V4-Flash
 }
 ```
 
-- 上游鉴权失败响应（SiliconFlow 返回 401/403，后端映射为 502）：
+- 上游鉴权失败响应（AI 服务返回 401/403，后端映射为 502）：
 
 ```json
 {
@@ -888,4 +889,12 @@ SILICONFLOW_MODEL=deepseek-ai/DeepSeek-V4-Flash
 
 - 其他错误：消息格式错误返回 400；请求过于频繁返回 429；未配置密钥或网络不可用返回 503；上游超时返回 504。
 - 安全说明：API Key 仅从 `backend/.env` 读取，不写入前端代码、不返回给浏览器、不记录到日志。
-- 修改时间：2026-11-12 15:50:00
+- 修改时间：2026-11-12 16:20:00
+
+### AI 服务配置调整
+
+- 调整时间：2026-11-12 16:20:00
+- 环境变量统一为 `AI_API_KEY`、`AI_API_URL`、`AI_MODEL`，同时兼容旧的 `SILICONFLOW_*` 变量名。
+- 当前配置：DeepSeek 官方接口 `https://api.deepseek.com/chat/completions`，模型 `deepseek-flash`。
+- `GET /api/chat` 的 `data` 新增 `provider` 字段，用于前端展示当前服务商。
+- 该接口仍保持 OpenAI Chat Completions 兼容协议，只要目标服务兼容该协议，即可通过修改环境变量切换。

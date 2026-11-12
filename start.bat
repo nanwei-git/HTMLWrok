@@ -26,7 +26,7 @@ if not exist ".env" (
   if exist ".env.example" (
     copy /Y ".env.example" ".env" >nul
     echo [提示] 已根据 .env.example 创建 backend\.env。
-    echo        请先填写 DB_USER、DB_PASSWORD、DB_HOST、DB_NAME 与 SILICONFLOW_API_KEY，然后重新运行本脚本。
+    echo        请先填写 DB_USER、DB_PASSWORD、DB_HOST、DB_NAME 与 AI_API_KEY，然后重新运行本脚本。
     pause
     exit /b 1
   )
@@ -36,9 +36,12 @@ if not exist ".env" (
   exit /b 1
 )
 
-findstr /B /C:"SILICONFLOW_API_KEY=" ".env" >nul 2>nul
+findstr /B /C:"AI_API_KEY=" ".env" >nul 2>nul
 if errorlevel 1 (
-  echo [提示] 未在 backend\.env 中检测到 SILICONFLOW_API_KEY，AI 对话页面将不可用。
+  findstr /B /C:"SILICONFLOW_API_KEY=" ".env" >nul 2>nul
+  if errorlevel 1 (
+    echo [提示] 未在 backend\.env 中检测到 AI_API_KEY，AI 对话页面将不可用。
+  )
 )
 
 if not exist "node_modules" (

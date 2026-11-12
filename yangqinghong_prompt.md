@@ -135,3 +135,11 @@ curl --request POST \
     ]
   }'
 ```
+
+## 2026-11-12 16:15:35 | DeepSeek V4.1 Flash Free
+
+### 提示词全文
+
+```text
+sk-[API Key 已脱敏，仅写入 backend/.env]
+```

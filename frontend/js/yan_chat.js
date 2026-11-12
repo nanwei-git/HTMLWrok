@@ -19,6 +19,7 @@
   const yan_status_text = document.querySelector('[data-yan-chat-status-text]');
   const yan_key_status = document.querySelector('[data-yan-chat-key-status]');
   const yan_model_code = document.querySelector('[data-yan-chat-model-code]');
+  const yan_persona_note = document.querySelector('[data-yan-chat-persona-note]');
   const yan_json_output = document.querySelector('[data-yan-chat-json]');
   const yan_state = {
     messages: [],
@@ -450,6 +451,10 @@
 
       if (yan_model_code) {
         yan_model_code.textContent = yan_data.model;
+      }
+
+      if (yan_persona_note) {
+        yan_persona_note.textContent = `${yan_data.provider || 'AI 服务'} · ${yan_data.model} · 后端代理`;
       }
 
       if (yan_key_status) {

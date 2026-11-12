@@ -54,11 +54,11 @@
       <h1 class="yan_page-title" id="yan_page_title">AI 对话</h1>
       <p class="yan_page-lead">
         向云栖 AI 助手咨询数据分析、MySQL、工作流编排或原生前端开发问题。
-        浏览器只与本站后端通信，SiliconFlow API Key 保存在后端环境变量中，不会出现在页面源码或网络请求里。
+        浏览器只与本站后端通信，AI 服务 API Key 保存在后端环境变量中，不会出现在页面源码或网络请求里。
       </p>
 
       <div class="yan_summary-inline" aria-label="AI 对话配置">
-        <span class="yan_summary-item">模型 <strong data-yan-chat-model>DeepSeek V4 Flash</strong></span>
+        <span class="yan_summary-item">模型 <strong data-yan-chat-model>DeepSeek Flash</strong></span>
         <span class="yan_summary-item">上下文 <strong>20 条</strong></span>
         <span class="yan_summary-item">单条消息 <strong>4000 字</strong></span>
         <span class="yan_summary-item">密钥托管 <strong>后端 .env</strong></span>
@@ -80,7 +80,7 @@
             <span class="yan_chat-avatar yan_chat-avatar--ai" aria-hidden="true">AI</span>
             <span>
               <strong class="yan_chat-persona-name" id="yan_chat_title">云栖 AI 助手</strong>
-              <small class="yan_chat-persona-note">DeepSeek V4 Flash · 后端安全代理</small>
+              <small class="yan_chat-persona-note" data-yan-chat-persona-note>DeepSeek Flash · 后端安全代理</small>
             </span>
           </div>
           <span class="yan_chat-status" data-yan-chat-status>
@@ -157,14 +157,14 @@
             </div>
             <div class="yan_chat-config">
               <span>当前模型</span>
-              <strong data-yan-chat-model-code>deepseek-ai/DeepSeek-V4-Flash</strong>
+              <strong data-yan-chat-model-code>deepseek-flash</strong>
             </div>
             <div class="yan_chat-config">
               <span>密钥状态</span>
               <strong data-yan-chat-key-status>正在检查</strong>
             </div>
             <p class="yan_state-text" style="text-align: left; margin-top: 14px;">
-              API Key 仅由 Express 后端读取，并通过服务端请求转发到 SiliconFlow。
+              API Key 仅由 Express 后端读取，并通过服务端请求转发到配置的 AI 服务（当前为 DeepSeek 官方接口）。
             </p>
           </div>
         </article>
